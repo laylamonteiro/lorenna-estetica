@@ -334,6 +334,26 @@
       transform: translateY(0);
     }
   }
+  
+  .logo-subtitle {
+    font-family: 'Playfair Display', cursive; 
+    font-weight: 300;
+    color: #555;
+    margin: -5px 0 0 0; /* aproxima um pouco do título */
+    text-align: center;
+    animation: fadeInUp 1.2s ease both;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 
   </style>
 
@@ -367,6 +387,7 @@
       <a href="#inicio" class="brand">
         <span class="brand-logo" aria-hidden="true">💮</span>
         <h1 class="logo-title">Lorenna Estética</h1>
+        <p class="logo-subtitle">Beleza & bem estar</p>
       </a>
       <nav class="menu" aria-label="principal">
         <a href="#servicos">Serviços</a>
