@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Great+Vibes&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Great+Vibes&display=swap" rel="stylesheet">  
   <style>
     :root{
       --rosa:#f59ac3;          /* rosa principal */
@@ -315,68 +315,24 @@
 
   /* Segurança global extra (não impacta desktop) */
   html, body { overflow-x: clip; } /* evita barra horizontal em qualquer zoom acidental */
-
-  /* Logo / Título principal */
-  .logo-title {
-    font-family: 'Playfair Display', 'Cinzel', 'Great Vibes', serif; /* fontes elegantes */
-    font-size: clamp(2.2rem, 6vw, 4rem);  /* cresce conforme a tela */
-    font-weight: 700;
-    letter-spacing: 1px;
-    text-align: center;
-    color: #d63384; /* rosa elegante, pode trocar se quiser */
-    margin-bottom: 1rem;
-    position: relative;
-  }
-
-  /* detalhe decorativo embaixo */
-  .logo-title::after {
-    content: "";
-    display: block;
-    width: 60px;
-    height: 4px;
-    background: linear-gradient(90deg, #d63384, #ffb6c1);
-    margin: 12px auto 0;
-    border-radius: 2px;
-  }
-
-  .logo-title {
-    animation: fadeInDown 1s ease-out;
-  }
-
-  @keyframes fadeInDown {
-    from { opacity: 0; transform: translateY(-30px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  .logo-title {
-    font-family: 'Great Vibes', serif;
-    font-size: clamp(2.5rem, 7vw, 4.5rem);
-    font-weight: 700;
-    letter-spacing: 1px;
-    text-align: center;
-    color: #d63384;
-    margin-bottom: 1rem;
-    position: relative;
-    animation: fadeInDown 1s ease-out;
-  }
-  .logo-title::after {
-    content: "";
-    display: block;
-    width: 70px;
-    height: 4px;
-    background: linear-gradient(90deg, #d63384, #ffb6c1);
-    margin: 12px auto 0;
-    border-radius: 2px;
-  }
-  .logo-subtitle {
+    .logo-title {
     font-family: 'Playfair Display', cursive;
-    font-size: clamp(1.5rem, 4vw, 2rem);
-    color: #555;
-    margin-bottom: 15px;
+    font-size: 2rem; /* mantém próximo do tamanho anterior */
+    font-weight: 400;
+    color: #d63384; /* ajusta a cor se quiser */
+    margin: 0;
+    animation: fadeInDown 1s ease both;
   }
+
   @keyframes fadeInDown {
-    from { opacity: 0; transform: translateY(-30px); }
-    to   { opacity: 1; transform: translateY(0); }
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   </style>
@@ -409,8 +365,8 @@
   <header>
     <div class="container nav">
       <a href="#inicio" class="brand">
+        <span class="brand-logo" aria-hidden="true">💮</span>
         <h1 class="logo-title">Lorenna Estética</h1>
-        <p class="logo-subtitle">Beleza & Bem-estar</p>
       </a>
       <nav class="menu" aria-label="principal">
         <a href="#servicos">Serviços</a>
