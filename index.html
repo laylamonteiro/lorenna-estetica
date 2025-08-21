@@ -164,6 +164,52 @@
       h1{font-size:30px;line-height:1.15}
       .lead{font-size:16px}
     }
+    /*************  MOBILE POLISH (apenas mobile)  *************/
+    @media (max-width: 768px) {
+      /* 1) Hero: mais respiro nas laterais do texto */
+      .container { padding-left: 22px; padding-right: 22px; } /* era 20px */
+      .hero { padding-top: 38px; }
+      .hero > .reveal { padding-left: 2px; padding-right: 2px; } /* microajuste sem afetar o grid */
+      .badges { gap: 10px; }
+      .badge { padding: 8px 10px; }
+
+      /* 2) Depoimentos: largura fixa por slide + reset de margins */
+      .slider { padding: 0; }
+      .slides { display: flex; gap: 0; will-change: transform; }
+      .slide { 
+        min-width: 100vw;           /* garante que cada slide ocupe 100% da viewport */
+        box-sizing: border-box;
+        padding: 18px 22px; 
+        margin: 0; 
+      }
+      .slide blockquote, .slide figcaption, .slide .stars { margin: 0 0 8px; }
+      .slide .stars { letter-spacing: 3px; }
+      /* Se notar que está “pulando” 2px entre slides por causa do padding do container,
+        pode usar 100% ao invés de 100vw: */
+      /* .slide { min-width: 100%; } */
+
+      /* 3) Onde estamos: mapa em cima, endereço embaixo */
+      #contato .grid {
+        display: flex;             /* troca o grid por coluna pra poder reordenar */
+        flex-direction: column;
+        gap: 16px;
+      }
+      #contato .grid > :nth-child(2) { order: -1; }  /* card do mapa sobe */
+      /* Largura total e bordas OK para o iframe */
+      #contato iframe { width: 100% !important; min-height: 320px; border: 0; display: block; }
+
+      /* 4) Footer: empilhar, com respiro e leitura confortável */
+      .foot-grid {
+        display: grid;
+        grid-template-columns: 1fr;  /* um em cima do outro */
+        gap: 14px;
+      }
+      footer .foot h4 { margin-bottom: 6px; }
+      footer { text-align: left; padding-left: 22px; padding-right: 22px; }
+    }
+
+    /* microfix extra para o slider em qualquer largura */
+    figure.slide { margin: 0; }
   </style>
 
   <!-- SEO LocalBusiness (ajuste os campos) -->
