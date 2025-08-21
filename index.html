@@ -2,13 +2,14 @@
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Clínica de Estética | Seu Nome</title>
   <meta name="description" content="Estética avançada: facial, corporal e depilação a LED. Atendimento humanizado e resultados reais." />
   <meta name="theme-color" content="#f7d4e8" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Great+Vibes&display=swap" rel="stylesheet">
   <style>
     :root{
       --rosa:#f59ac3;          /* rosa principal */
@@ -277,6 +278,106 @@
       margin: 0 auto;
     }
   }
+  
+  /************* MOBILE LOCK / ANTI-OVERFLOW *************/
+  @media (max-width: 768px) {
+    /* 2.1) Nunca deixe a página rolar pro lado */
+    html, body {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: clip;          /* melhor que hidden em iOS modernos */
+      overscroll-behavior-x: none;
+      touch-action: pan-y;       /* ignora gesto de arrastar horizontal da página */
+    }
+
+    /* 2.2) Containers principais não podem ultrapassar a tela */
+    .container,
+    header, nav, .hero, section, footer,
+    .slider, .slides, .gallery, .cta-section, .map-container {
+      max-width: 100% !important;
+    }
+
+    /* 2.3) Garantia extra: imagens/iframes nunca maior que a viewport */
+    img, svg, iframe {
+      max-width: 100% !important;
+      height: auto;
+      display: block;
+    }
+
+    /* 2.4) Carrossel: cada slide encaixa exatamente na largura do trilho */
+    figure.slide { flex: 0 0 100% !important; margin: 0 !important; padding: 0 !important; }
+    .slide .inner { padding: 18px 20px !important; }
+    .slides { gap: 0 !important; }
+
+    /* 2.5) Blob decorativa menor (evita “sombra” fora da tela) */
+    .blob { right: -40px; bottom: -60px; width: 240px; height: 240px; }
+  }
+
+  /* Segurança global extra (não impacta desktop) */
+  html, body { overflow-x: clip; } /* evita barra horizontal em qualquer zoom acidental */
+
+  /* Logo / Título principal */
+  .logo-title {
+    font-family: 'Playfair Display', 'Cinzel', 'Great Vibes', serif; /* fontes elegantes */
+    font-size: clamp(2.2rem, 6vw, 4rem);  /* cresce conforme a tela */
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-align: center;
+    color: #d63384; /* rosa elegante, pode trocar se quiser */
+    margin-bottom: 1rem;
+    position: relative;
+  }
+
+  /* detalhe decorativo embaixo */
+  .logo-title::after {
+    content: "";
+    display: block;
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, #d63384, #ffb6c1);
+    margin: 12px auto 0;
+    border-radius: 2px;
+  }
+
+  .logo-title {
+    animation: fadeInDown 1s ease-out;
+  }
+
+  @keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .logo-title {
+    font-family: 'Great Vibes', serif;
+    font-size: clamp(2.5rem, 7vw, 4.5rem);
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-align: center;
+    color: #d63384;
+    margin-bottom: 1rem;
+    position: relative;
+    animation: fadeInDown 1s ease-out;
+  }
+  .logo-title::after {
+    content: "";
+    display: block;
+    width: 70px;
+    height: 4px;
+    background: linear-gradient(90deg, #d63384, #ffb6c1);
+    margin: 12px auto 0;
+    border-radius: 2px;
+  }
+  .logo-subtitle {
+    font-family: 'Playfair Display', cursive;
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    color: #555;
+    margin-bottom: 15px;
+  }
+  @keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
 
   </style>
 
@@ -308,8 +409,8 @@
   <header>
     <div class="container nav">
       <a href="#inicio" class="brand">
-        <span class="brand-logo" aria-hidden="true">💮</span>
-        <strong>Lorenna Estética</strong>
+        <h1 class="logo-title">Lorenna Estética</h1>
+        <p class="logo-subtitle">Beleza & Bem-estar</p>
       </a>
       <nav class="menu" aria-label="principal">
         <a href="#servicos">Serviços</a>
@@ -320,7 +421,6 @@
         <a href="#contato">Localização</a>
         <a class="cta" href="https://wa.me/5512997956374?text=Ol%C3%A1!%20Quero%20agendar%20uma%20avalia%C3%A7%C3%A3o" target="_blank" rel="noopener">Agendar</a>
       </nav>
-      <a class="hamb" href="https://wa.me/5512997956374?text=Ol%C3%A1!%20Quero%20agendar%20uma%20avalia%C3%A7%C3%A3o" target="_blank" rel="noopener" aria-label="Agendar no WhatsApp">📲</a>
     </div>
   </header>
 
@@ -519,9 +619,15 @@
         <p><strong>Horário:</strong> Seg–Sex 08:30–19:00 • Sáb 08:30–13:00</p>
         <p><strong>WhatsApp:</strong> <a href="https://wa.me/5512997956374" target="_blank" rel="noopener">(11) 90000-0000</a></p>
         <div class="social">
-          <a href="https://www.instagram.com/seuusuario" target="_blank" aria-label="Instagram">📷</a>
-          <a href="https://www.facebook.com/seuusuario" target="_blank" aria-label="Facebook">📘</a>
-          <a href="mailto:contato@seudominio.com" aria-label="E-mail">✉️</a>
+          <a href="https://www.instagram.com/seuusuario" target="_blank" aria-label="Instagram">
+            <img src="https://images.seeklogo.com/logo-png/28/1/instagram-new-2016-logo-png_seeklogo-282177.png" alt="Instagram" style="width:38px;height:38px;object-fit:contain;border-radius:10px;"/>
+          </a>
+          <a href="https://www.facebook.com/seuusuario" target="_blank" aria-label="Facebook">
+            <img src="https://www.iconpacks.net/icons/2/free-icon-facebook-logo-2428.png" alt="Facebook" style="width:38px;height:38px;object-fit:contain;border-radius:10px;"/>
+          </a>
+          <a href="mailto:contato@seudominio.com" aria-label="E-mail">
+            <img src="https://img.freepik.com/premium-vector/email-vector-illustration-white-background_917213-247178.jpg" alt="Facebook" style="width:38px;height:38px;object-fit:contain;border-radius:10px;"/>
+          </a>
         </div>
       </div>
       <div class="card" style="background:linear-gradient(90deg,#fff,#fff0f6,#fff);background-size:200% 100%;animation:shimmer 3s linear infinite;border:1px dashed #ffd9ea">
