@@ -22,16 +22,11 @@
       --max:1200px;
     }
     *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;color:var(--texto);background:linear-gradient(180deg,var(--branco),#fff 35%,var(--rosa-claro) 100%);}
-    img,svg{max-width:100%;display:block;border-radius:12px}
+    html{scroll-behavior:smooth; -webkit-text-size-adjust:100%}
+    body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;color:var(--texto);background:linear-gradient(180deg,var(--branco),#fff 35%,var(--rosa-claro) 100%);overflow-x:hidden}
+    img,svg,iframe{max-width:100%;display:block;border-radius:12px;height:auto}
     a{text-decoration:none;color:inherit}
-    .container{
-      max-width:var(--max);
-      width:100%;
-      margin-inline:auto;
-      padding:0 20px;
-    }
+    .container{max-width:var(--max);width:100%;margin-inline:auto;padding:0 20px}
 
     /* NAV */
     header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.8);backdrop-filter:blur(10px);border-bottom:1px solid #f1f1f1}
@@ -67,41 +62,14 @@
     .reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease, transform .6s ease}
     .reveal.in{opacity:1;transform:none}
 
-    section#clinica {
-      margin-bottom: 60px;
-    }
-    .cta-section {
-      margin-bottom: 60px;
-      margin-left: 70px;
-    }
-    section#metodo {
-      margin-bottom: 60px;
-    }
-    section#servicos {
-      margin-bottom: 60px;
-    }
-    section#depoimentos {
-      margin-bottom: 60px;
-    }
-    section#antes_depois {
-      margin-bottom: 60px;
-    }
-    section#sobre {
-      margin-bottom: 60px;
-    }
-    section#contato {
-      margin-top: 60px;
-    }
-
-    body {
-      overflow-x: hidden;
-    }
-
-    .gallery svg {
-      max-width: 100%;
-      height: auto;
-      display: block;
-    }
+    /* espaçamentos */
+    section#clinica{margin-bottom:24px}
+    section#metodo{margin-bottom:60px}
+    section#servicos{margin-bottom:60px}
+    section#depoimentos{margin-bottom:60px}
+    section#antes_depois{margin-bottom:60px}
+    section#sobre{margin-bottom:60px}
+    section#contato{margin-top:24px}
 
     /* SERVICES */
     .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
@@ -125,8 +93,31 @@
     /* SOBRE + CLÍNICA */
     .about{display:grid;grid-template-columns:.9fr 1.1fr;gap:28px;align-items:center}
 
-    /* CTA SEÇÃO */
-    .cta-section{background:linear-gradient(120deg,var(--rosa),#fff0f6);border:1px solid #ffd9ea;padding:30px;border-radius:var(--radius);display:grid;gap:14px;box-shadow:var(--sombra)}
+    /* CTA SEÇÃO (caixa interna) */
+    .cta-section{
+      box-sizing: border-box;
+      background: linear-gradient(120deg,var(--rosa),#fff0f6);
+      border: 1px solid #ffd9ea;
+      padding: 30px;
+      border-radius: var(--radius);
+      display: grid;
+      gap: 14px;
+      box-shadow: var(--sombra);
+    }
+    .cta-section .cta{ justify-self: start; }
+
+
+    /* CONTATO – mapa responsivo */
+    .map-container{
+      position:relative;
+      width:100%;
+      max-width:800px;
+      margin:20px auto 0;
+      overflow:hidden;
+      border-radius:12px;
+      box-shadow:0 4px 20px rgba(0,0,0,.1);
+    }
+    .map-container iframe{width:100%;min-height:300px;border:0;display:block}
 
     /* FOOTER */
     footer{padding:40px 0;color:#4b4b4b}
@@ -145,12 +136,10 @@
     @keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
 
     /* prefers-reduced-motion */
-    @media (prefers-reduced-motion: reduce){
-      *{animation:none !important;transition:none !important}
-    }
+    @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
 
     /* RESPONSIVO */
-    @media (max-width: 980px){
+    @media (max-width:980px){
       .hero{grid-template-columns:1fr}
       .hero-grid{grid-template-columns:1fr 1fr}
       .highlight{grid-template-columns:1fr}
@@ -158,12 +147,22 @@
       .grid{grid-template-columns:1fr 1fr}
       .gallery{grid-template-columns:1fr 1fr}
     }
-    @media (max-width: 640px){
+    @media (max-width:768px){
+      .hero-grid{grid-template-columns:1fr;gap:12px}
+      .grid{grid-template-columns:1fr;gap:14px}
+      section .container{padding-left:16px;padding-right:16px}
+    }
+    @media (max-width:640px){
       h1{font-size:36px}
-      .grid{grid-template-columns:1fr}
       .gallery{grid-template-columns:1fr}
       .menu{display:none}
       .hamb{display:block}
+      header .nav{padding:10px 0}
+      .hero{padding-top:36px}
+    }
+    @media (max-width:420px){
+      h1{font-size:30px;line-height:1.15}
+      .lead{font-size:16px}
     }
   </style>
 
@@ -173,7 +172,7 @@
     "@context":"https://schema.org",
     "@type":"LocalBusiness",
     "name":"Clínica de Estética – Seu Nome",
-    "image":"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='630'><rect width='100%' height='100%' fill='%23fde8f2'/><text x='50%' y='55%' dominant-baseline='middle' text-anchor='middle' fill='%23e16aa2' font-family='Inter, Arial' font-size='48'>Seu Nome Estética</text></svg>",
+    "image":"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='630'><rect width='100%' height='100%' fill='%23fde8f2'/><text x='50%' y='55%' dominant-baseline='middle' text-anchor='middle' fill='%23e16aa2' font-family='Inter, Arial' font-size='48'>Lorenna Estética</text></svg>",
     "telephone":"+55 11 90000-0000",
     "address":{
       "@type":"PostalAddress",
@@ -196,7 +195,7 @@
     <div class="container nav">
       <a href="#inicio" class="brand">
         <span class="brand-logo" aria-hidden="true">💮</span>
-        <strong>Seu Nome Estética</strong>
+        <strong>Lorenna Estética</strong>
       </a>
       <nav class="menu" aria-label="principal">
         <a href="#servicos">Serviços</a>
@@ -205,9 +204,9 @@
         <a href="#sobre">Sobre</a>
         <a href="#clinica">Clínica</a>
         <a href="#contato">Localização</a>
-        <a class="cta" href="https://wa.me/5500000000000?text=Ol%C3%A1!%20Quero%20agendar%20uma%20avalia%C3%A7%C3%A3o" target="_blank" rel="noopener">Agendar</a>
+        <a class="cta" href="https://wa.me/5512997956374?text=Ol%C3%A1!%20Quero%20agendar%20uma%20avalia%C3%A7%C3%A3o" target="_blank" rel="noopener">Agendar</a>
       </nav>
-      <a class="hamb" href="https://wa.me/5500000000000?text=Ol%C3%A1!%20Quero%20agendar%20uma%20avalia%C3%A7%C3%A3o" target="_blank" rel="noopener" aria-label="Agendar no WhatsApp">📲</a>
+      <a class="hamb" href="https://wa.me/5512997956374?text=Ol%C3%A1!%20Quero%20agendar%20uma%20avalia%C3%A7%C3%A3o" target="_blank" rel="noopener" aria-label="Agendar no WhatsApp">📲</a>
     </div>
   </header>
 
@@ -225,7 +224,7 @@
         <span class="badge">📍 Atendemos sua região</span>
       </div>
       <div style="display:flex;gap:12px;flex-wrap:wrap">
-        <a class="cta" href="https://wa.me/5500000000000?text=Ol%C3%A1!%20Quero%20agendar%20uma%20avalia%C3%A7%C3%A3o" target="_blank" rel="noopener">Agendar avaliação</a>
+        <a class="cta" href="https://wa.me/5512997956374?text=Ol%C3%A1!%20Quero%20agendar%20uma%20avalia%C3%A7%C3%A3o" target="_blank" rel="noopener">Agendar avaliação</a>
         <a class="badge" href="#servicos" style="background:var(--rosa-claro)">Ver serviços ↓</a>
       </div>
       <p style="color:#9b5873;margin-top:10px;font-size:13px">*Resultados variam por pessoa. Consulte avaliação profissional.</p>
@@ -234,12 +233,7 @@
       <!-- Cards com ilustrações SVG IN-LINE (sem links externos) -->
       <div class="hero-card">
         <svg viewBox='0 0 800 600' xmlns='http://www.w3.org/2000/svg' role='img' aria-label='Tratamento facial'>
-          <defs>
-            <linearGradient id='g1' x1='0' y1='0' x2='1' y2='1'>
-              <stop offset='0%' stop-color='#fde8f2'/>
-              <stop offset='100%' stop-color='#f59ac3'/>
-            </linearGradient>
-          </defs>
+          <defs><linearGradient id='g1' x1='0' y1='0' x2='1' y2='1'><stop offset='0%' stop-color='#fde8f2'/><stop offset='100%' stop-color='#f59ac3'/></linearGradient></defs>
           <rect width='100%' height='100%' fill='url(#g1)'/>
           <circle cx='620' cy='120' r='90' fill='white' opacity='.6'/>
           <g transform='translate(160,110)'>
@@ -312,7 +306,7 @@
         <div class="check"><span>✅</span>Protocolo combinado (crio + estímulos + hábitos) quando indicado.</div>
         <div class="check"><span>✅</span>Acompanhamento de resultados com fotos e medições periódicas.</div>
         <br>
-        <a class="cta" href="https://wa.me/5500000000000?text=Quero%20saber%20sobre%20o%20m%C3%A9todo" target="_blank" rel="noopener">Quero conhecer</a>
+        <a class="cta" href="https://wa.me/5512997956374?text=Quero%20saber%20sobre%20o%20m%C3%A9todo" target="_blank" rel="noopener">Quero conhecer</a>
       </div>
       <svg viewBox='0 0 1400 900' xmlns='http://www.w3.org/2000/svg' role='img' aria-label='Aplicação de método exclusivo'><rect width='100%' height='100%' fill='#fde8f2'/><g transform='translate(160,140)'><rect x='0' y='0' width='360' height='240' rx='24' fill='#fff' stroke='#ffd9ea'/><rect x='420' y='0' width='360' height='240' rx='24' fill='#fff' stroke='#ffd9ea'/><rect x='840' y='0' width='360' height='240' rx='24' fill='#fff' stroke='#ffd9ea'/><rect x='0' y='300' width='360' height='240' rx='24' fill='#fff' stroke='#ffd9ea'/><rect x='420' y='300' width='360' height='240' rx='24' fill='#fff' stroke='#ffd9ea'/><rect x='840' y='300' width='360' height='240' rx='24' fill='#fff' stroke='#ffd9ea'/></g></svg>
     </div>
@@ -384,11 +378,15 @@
     </div>
   </section>
 
-  <!-- CTA -->
-  <section class="container cta-section reveal">
-    <h2 style="margin:0">Pronta para sua avaliação?</h2>
-    <p class="section-sub" style="margin:0">Clique no botão e fale direto pelo WhatsApp.</p>
-    <a class="cta" style="justify-self:start" href="https://wa.me/5500000000000?text=Ol%C3%A1!%20Quero%20agendar%20uma%20avalia%C3%A7%C3%A3o" target="_blank" rel="noopener">Agendar agora</a>
+  <!-- CTA (alinhada ao grid/Recepção) -->
+  <section class="reveal" style="padding:28px 0">
+    <div class="container">
+      <div class="cta-section">
+        <h2 style="margin:0">Pronta para sua avaliação?</h2>
+        <p class="section-sub" style="margin:0">Clique no botão e fale direto pelo WhatsApp.</p>
+        <a class="cta" style="justify-self:start" href="https://wa.me/5512997956374?text=Ol%C3%A1!%20Quero%20agendar%20uma%20avalia%C3%A7%C3%A3o" target="_blank" rel="noopener">Agendar agora</a>
+      </div>
+    </div>
   </section>
 
   <!-- CONTATO / LOCALIZAÇÃO -->
@@ -399,19 +397,21 @@
         <h3>Endereço</h3>
         <p>Rua Exemplo, 123 – Bairro – Cidade/SP</p>
         <p><strong>Horário:</strong> Seg–Sex 08:30–19:00 • Sáb 08:30–13:00</p>
-        <p><strong>WhatsApp:</strong> <a href="https://wa.me/5500000000000" target="_blank" rel="noopener">(11) 90000‑0000</a></p>
+        <p><strong>WhatsApp:</strong> <a href="https://wa.me/5512997956374" target="_blank" rel="noopener">(11) 90000-0000</a></p>
         <div class="social">
           <a href="https://www.instagram.com/seuusuario" target="_blank" aria-label="Instagram">📷</a>
           <a href="https://www.facebook.com/seuusuario" target="_blank" aria-label="Facebook">📘</a>
           <a href="mailto:contato@seudominio.com" aria-label="E-mail">✉️</a>
         </div>
       </div>
-      <div class="card" style="min-height:300px;display:grid;place-items:center;background:linear-gradient(90deg,#fff,#fff0f6,#fff);background-size:200% 100%;animation:shimmer 3s linear infinite;border:1px dashed #ffd9ea">
-        <div style="text-align:center;color:#8a506a">
-          <strong>Mapa</strong><br/>
-            <iframe title="Mapa" class="card" style="border:0;min-height:300px" loading="lazy" allowfullscreen
-              src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14632.000000!2d-46.6388!3d-23.5489!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zU8OjbyBQYXVsbywgQlI!5e0!3m2!1spt-BR!2sbr!4v1700000000000">
-            </iframe>
+      <div class="card" style="background:linear-gradient(90deg,#fff,#fff0f6,#fff);background-size:200% 100%;animation:shimmer 3s linear infinite;border:1px dashed #ffd9ea">
+        <div class="map-container">
+          <iframe
+            title="Mapa"
+            loading="lazy"
+            allowfullscreen
+            src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14632.000000!2d-46.6388!3d-23.5489!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zU8OjbyBQYXVsbywgQlI!5e0!3m2!1spt-BR!2sbr!4v1700000000000">
+          </iframe>
         </div>
       </div>
     </div>
@@ -420,7 +420,7 @@
   <footer>
     <div class="container foot-grid">
       <div class="foot">
-        <h4>Seu Nome Estética</h4>
+        <h4>Lorenna Estética</h4>
         <p>CR... | CNPJ 00.000.000/0000-00</p>
         <p>Todos os procedimentos seguem protocolos de segurança e avaliação prévia.</p>
       </div>
@@ -434,11 +434,11 @@
         <h4>Atendimento</h4>
         <p>Seg–Sex 08:30–19:00</p>
         <p>Sáb 08:30–13:00</p>
-        <a class="cta" href="https://wa.me/5500000000000?text=Ol%C3%A1!%20Quero%20agendar%20uma%20avalia%C3%A7%C3%A3o" target="_blank" rel="noopener">Agendar pelo Whatsapp</a>
+        <a class="cta" href="https://wa.me/5512997956374?text=Ol%C3%A1!%20Quero%20agendar%20uma%20avalia%C3%A7%C3%A3o" target="_blank" rel="noopener">Agendar pelo Whatsapp</a>
       </div>
     </div>
     <div class="container copyright">
-      © <span id="year"></span> Seu Nome Estética — Todos os direitos reservados.
+      © <span id="year"></span> Lorenna Estética — Todos os direitos reservados.
     </div>
   </footer>
 
