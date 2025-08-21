@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Clínica de Estética | Seu Nome</title>
+  <meta name="description" content="Estética avançada: facial, corporal e depilação a LED. Atendimento humanizado e resultados reais." />
+  <meta name="theme-color" content="#f7d4e8" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --rosa:#f59ac3;          /* rosa principal */
+      --rosa-escuro:#e16aa2;   /* rosa de foco/hover */
+      --rosa-claro:#fde8f2;    /* fundos suaves */
+      --texto:#2a2a2a;         /* texto primário */
+      --cinza:#6b7280;         /* texto secundário */
+      --branco:#ffffff;
+      --sombra:0 10px 30px rgba(245,154,195,.25);
+      --radius:18px;
+      --max:1200px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;color:var(--texto);background:linear-gradient(180deg,var(--branco),#fff 35%,var(--rosa-claro) 100%);}
+    img,svg{max-width:100%;display:block;border-radius:12px}
+    a{text-decoration:none;color:inherit}
+    .container{
+      max-width:var(--max);
+      width:100%;
+      margin-inline:auto;
+      padding:0 20px;
+    }
+
+    /* NAV */
+    header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.8);backdrop-filter:blur(10px);border-bottom:1px solid #f1f1f1}
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+    .brand{display:flex;gap:10px;align-items:center}
+    .brand-logo{width:40px;height:40px;display:grid;place-items:center;background:var(--rosa);border-radius:50%;box-shadow:var(--sombra);animation:pop .6s ease both}
+    .brand strong{font-weight:800;letter-spacing:.2px}
+    .menu{display:flex;gap:18px;align-items:center}
+    .menu a{padding:8px 12px;border-radius:10px;color:var(--cinza);font-weight:600;position:relative;overflow:hidden}
+    .menu a::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:0;background:linear-gradient(90deg,var(--rosa),var(--rosa-escuro));transition:width .3s ease}
+    .menu a:hover{color:#111}
+    .menu a:hover::after{width:100%}
+    .cta{padding:10px 16px;background:var(--rosa);color:#111;border-radius:999px;font-weight:800;box-shadow:var(--sombra);transform:translateZ(0)}
+    .cta:hover{background:var(--rosa-escuro);color:#fff}
+    .cta:active{transform:scale(.98)}
+    .hamb{display:none}
+
+    /* HERO */
+    .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;padding:60px 0;position:relative}
+    .blob{position:absolute;inset:auto -100px -120px auto;width:400px;height:400px;filter:blur(45px);opacity:.4;animation:float 14s ease-in-out infinite}
+    .pill{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:var(--rosa-claro);color:#8a506a;font-weight:700;font-size:12px;letter-spacing:.3px;animation:fadeIn .7s ease .2s both}
+    h1{font-size:46px;line-height:1.05;margin:16px 0 8px}
+    .lead{font-size:18px;color:var(--cinza);margin:0 0 22px}
+    .badges{display:flex;gap:12px;flex-wrap:wrap;margin:24px 0}
+    .badge{background:var(--branco);border:1px solid #f3d7e5;color:#7a3b54;padding:8px 12px;border-radius:999px;font-weight:700;box-shadow:var(--sombra)}
+    .hero-card{background:var(--branco);padding:14px;border-radius:var(--radius);box-shadow:var(--sombra);animation:floatAlt 10s ease-in-out infinite}
+    .hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+
+    /* SECTION */
+    section{padding:60px 0}
+    .section-title{font-size:34px;margin:0 0 10px}
+    .section-sub{color:var(--cinza);margin:0 0 26px}
+    .reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease, transform .6s ease}
+    .reveal.in{opacity:1;transform:none}
+
+    section#clinica {
+      margin-bottom: 60px;
+    }
+    .cta-section {
+      margin-bottom: 60px;
+      margin-left: 70px;
+    }
+    section#metodo {
+      margin-bottom: 60px;
+    }
+    section#servicos {
+      margin-bottom: 60px;
+    }
+    section#depoimentos {
+      margin-bottom: 60px;
+    }
+    section#antes_depois {
+      margin-bottom: 60px;
+    }
+    section#sobre {
+      margin-bottom: 60px;
+    }
+    section#contato {
+      margin-top: 60px;
+    }
+
+    body {
+      overflow-x: hidden;
+    }
+
+    .gallery svg {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* SERVICES */
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .card{background:var(--branco);border-radius:var(--radius);box-shadow:var(--sombra);padding:18px;display:flex;flex-direction:column;gap:12px;transition:transform .25s ease, box-shadow .25s ease}
+    .card:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(245,154,195,.28)}
+
+    /* MÉTODO */
+    .highlight{background:var(--branco);padding:24px;border-radius:var(--radius);box-shadow:var(--sombra);display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:center}
+    .check{display:flex;gap:10px;align-items:flex-start;color:#124f2f}
+
+    /* DEPOIMENTOS */
+    .slider{position:relative;overflow:hidden;border-radius:var(--radius);box-shadow:var(--sombra);background:var(--branco)}
+    .slides{display:flex;transition:transform .5s ease}
+    .slide{min-width:100%;padding:22px}
+    .stars{letter-spacing:3px}
+
+    /* GALERIA */
+    .gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+    .gallery svg{aspect-ratio:1/1;object-fit:cover}
+
+    /* SOBRE + CLÍNICA */
+    .about{display:grid;grid-template-columns:.9fr 1.1fr;gap:28px;align-items:center}
+
+    /* CTA SEÇÃO */
+    .cta-section{background:linear-gradient(120deg,var(--rosa),#fff0f6);border:1px solid #ffd9ea;padding:30px;border-radius:var(--radius);display:grid;gap:14px;box-shadow:var(--sombra)}
+
+    /* FOOTER */
+    footer{padding:40px 0;color:#4b4b4b}
+    .foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:24px}
+    .foot h4{margin:0 0 8px}
+    .social{display:flex;gap:10px;margin-top:10px}
+    .social a{display:inline-grid;place-items:center;width:38px;height:38px;border-radius:10px;background:var(--rosa-claro);transition:transform .2s ease}
+    .social a:hover{transform:translateY(-2px)}
+    .copyright{margin-top:24px;font-size:13px;color:#6b6b6b}
+
+    /* ANIMAÇÕES */
+    @keyframes float{0%,100%{transform:translate(0,0)}50%{transform:translate(-12px,-18px)}}
+    @keyframes floatAlt{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+    @keyframes pop{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
+    @keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+    /* prefers-reduced-motion */
+    @media (prefers-reduced-motion: reduce){
+      *{animation:none !important;transition:none !important}
+    }
+
+    /* RESPONSIVO */
+    @media (max-width: 980px){
+      .hero{grid-template-columns:1fr}
+      .hero-grid{grid-template-columns:1fr 1fr}
+      .highlight{grid-template-columns:1fr}
+      .about{grid-template-columns:1fr}
+      .grid{grid-template-columns:1fr 1fr}
+      .gallery{grid-template-columns:1fr 1fr}
+    }
+    @media (max-width: 640px){
+      h1{font-size:36px}
+      .grid{grid-template-columns:1fr}
+      .gallery{grid-template-columns:1fr}
+      .menu{display:none}
+      .hamb{display:block}
+    }
+  </style>
+
+  <!-- SEO LocalBusiness (ajuste os campos) -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"LocalBusiness",
+    "name":"Clínica de Estética – Seu Nome",
+    "image":"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='630'><rect width='100%' height='100%' fill='%23fde8f2'/><text x='50%' y='55%' dominant-baseline='middle' text-anchor='middle' fill='%23e16aa2' font-family='Inter, Arial' font-size='48'>Seu Nome Estética</text></svg>",
+    "telephone":"+55 11 90000-0000",
+    "address":{
+      "@type":"PostalAddress",
+      "streetAddress":"Rua Exemplo, 123",
+      "addressLocality":"São Paulo",
+      "addressRegion":"SP",
+      "postalCode":"00000-000",
+      "addressCountry":"BR"
+    },
+    "openingHours":"Mo-Fr 08:30-19:00, Sa 08:30-13:00",
+    "sameAs":["https://www.instagram.com/seuusuario"]
+  }
+  </script>
+</head>
+<body>
+  <!-- blob suave de fundo -->
+  <svg class="blob" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g transform="translate(300,300)"><path d="M120,-176.3C155.1,-152.2,179.3,-114.9,200.1,-73.7C221,-32.6,238.6,12.4,230.4,54.8C222.3,97.3,188.4,137.1,149.9,168.9C111.3,200.7,68.1,224.4,20.4,241.2C-27.2,257.9,-79.3,267.7,-121.8,251.5C-164.4,235.3,-197.4,193.1,-220.5,148.7C-243.7,104.4,-257.1,58,-257.8,10.7C-258.5,-36.6,-246.6,-84.8,-223.7,-127.3C-200.8,-169.8,-167,-206.6,-125.9,-229.6C-84.9,-252.6,-42.4,-261.7,-0.4,-261C41.5,-260.4,83,-249.9,120,-176.3Z" fill="#f59ac3"/></g></svg>
+
+  <header>
+    <div class="container nav">
+      <a href="#inicio" class="brand">
+        <span class="brand-logo" aria-hidden="true">💮</span>
+        <strong>Seu Nome Estética</strong>
+      </a>
+      <nav class="menu" aria-label="principal">
+        <a href="#servicos">Serviços</a>
+        <a href="#metodo">Metodologia</a>
+        <a href="#depoimentos">Depoimentos</a>
+        <a href="#sobre">Sobre</a>
+        <a href="#clinica">Clínica</a>
+        <a href="#contato">Localização</a>
+        <a class="cta" href="https://wa.me/5500000000000?text=Ol%C3%A1!%20Quero%20agendar%20uma%20avalia%C3%A7%C3%A3o" target="_blank" rel="noopener">Agendar</a>
+      </nav>
+      <a class="hamb" href="https://wa.me/5500000000000?text=Ol%C3%A1!%20Quero%20agendar%20uma%20avalia%C3%A7%C3%A3o" target="_blank" rel="noopener" aria-label="Agendar no WhatsApp">📲</a>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <main id="inicio" class="container hero">
+    <div class="reveal">
+      <span class="pill">Estética avançada • Atendimento humanizado</span>
+      <h1>Resultados reais com um 
+        <span style="background:linear-gradient(90deg,var(--rosa),var(--rosa-escuro));-webkit-background-clip:text;background-clip:text;color:transparent">método exclusivo</span>
+      </h1>
+      <p class="lead">Facial, corporal e depilação a LED. Procedimentos não invasivos, personalizados e seguros.</p>
+      <div class="badges">
+        <span class="badge">✨ Resultados em ~45 dias*</span>
+        <span class="badge">🧖‍♀️ Planos personalizados</span>
+        <span class="badge">📍 Atendemos sua região</span>
+      </div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <a class="cta" href="https://wa.me/5500000000000?text=Ol%C3%A1!%20Quero%20agendar%20uma%20avalia%C3%A7%C3%A3o" target="_blank" rel="noopener">Agendar avaliação</a>
+        <a class="badge" href="#servicos" style="background:var(--rosa-claro)">Ver serviços ↓</a>
+      </div>
+      <p style="color:#9b5873;margin-top:10px;font-size:13px">*Resultados variam por pessoa. Consulte avaliação profissional.</p>
+    </div>
+    <div class="hero-grid reveal">
+      <!-- Cards com ilustrações SVG IN-LINE (sem links externos) -->
+      <div class="hero-card">
+        <svg viewBox='0 0 800 600' xmlns='http://www.w3.org/2000/svg' role='img' aria-label='Tratamento facial'>
+          <defs>
+            <linearGradient id='g1' x1='0' y1='0' x2='1' y2='1'>
+              <stop offset='0%' stop-color='#fde8f2'/>
+              <stop offset='100%' stop-color='#f59ac3'/>
+            </linearGradient>
+          </defs>
+          <rect width='100%' height='100%' fill='url(#g1)'/>
+          <circle cx='620' cy='120' r='90' fill='white' opacity='.6'/>
+          <g transform='translate(160,110)'>
+            <ellipse cx='200' cy='180' rx='170' ry='200' fill='white' opacity='.9'/>
+            <circle cx='160' cy='150' r='12' fill='#e16aa2'/>
+            <circle cx='240' cy='150' r='12' fill='#e16aa2'/>
+            <path d='M150 220 Q200 250 250 220' stroke='#e16aa2' stroke-width='8' fill='none' stroke-linecap='round'/>
+          </g>
+        </svg>
+      </div>
+      <div class="hero-card">
+        <svg viewBox='0 0 800 600' xmlns='http://www.w3.org/2000/svg' role='img' aria-label='Tratamento corporal'>
+          <rect width='100%' height='100%' fill='#fff0f6'/>
+          <path d='M100,500 C180,420 200,260 300,220 C400,180 470,300 560,260 C650,220 680,120 740,140 L740,520 L100,520 Z' fill='#f59ac3' opacity='.35'/>
+          <rect x='520' y='90' width='140' height='140' rx='24' fill='white' stroke='#f3d7e5'/>
+          <circle cx='590' cy='160' r='50' fill='#f59ac3' opacity='.6'/>
+        </svg>
+      </div>
+      <div class="hero-card">
+        <svg viewBox='0 0 800 600' xmlns='http://www.w3.org/2000/svg' role='img' aria-label='Ambiente da clínica'>
+          <rect width='100%' height='100%' fill='#fde8f2'/>
+          <rect x='120' y='120' width='560' height='360' rx='28' fill='white' stroke='#f3d7e5'/>
+          <rect x='160' y='160' width='220' height='120' rx='16' fill='#fff' stroke='#ffd9ea'/>
+          <rect x='420' y='160' width='220' height='260' rx='16' fill='#fff' stroke='#ffd9ea'/>
+          <circle cx='270' cy='350' r='60' fill='#f59ac3' opacity='.4'/>
+        </svg>
+      </div>
+      <div class="hero-card">
+        <svg viewBox='0 0 800 600' xmlns='http://www.w3.org/2000/svg' role='img' aria-label='Equipamentos modernos'>
+          <rect width='100%' height='100%' fill='#fff0f6'/>
+          <rect x='180' y='160' width='440' height='280' rx='24' fill='white' stroke='#f3d7e5'/>
+          <rect x='220' y='200' width='360' height='120' rx='12' fill='#fde8f2'/>
+          <rect x='220' y='340' width='260' height='60' rx='12' fill='#fde8f2'/>
+          <circle cx='520' cy='370' r='30' fill='#f59ac3'/>
+        </svg>
+      </div>
+    </div>
+  </main>
+
+  <!-- SERVIÇOS -->
+  <section id="servicos" class="container reveal">
+    <h2 class="section-title">Nossos serviços</h2>
+    <p class="section-sub">Tratamentos pensados para suas necessidades.</p>
+    <div class="grid">
+      <article class="card">
+        <svg viewBox='0 0 1200 700' xmlns='http://www.w3.org/2000/svg' role='img' aria-label='Rejuvenescimento facial'><defs><linearGradient id='b1' x1='0' y1='0' x2='1' y2='1'><stop offset='0%' stop-color='#fff0f6'/><stop offset='100%' stop-color='#fde8f2'/></linearGradient></defs><rect width='100%' height='100%' fill='url(#b1)'/><path d='M400,580 C430,420 520,360 600,360 C680,360 770,420 800,580' fill='none' stroke='#e16aa2' stroke-width='12' stroke-linecap='round'/><circle cx='540' cy='320' r='10' fill='#e16aa2'/><circle cx='660' cy='320' r='10' fill='#e16aa2'/></svg>
+        <h3>Rejuvenescimento Facial</h3>
+        <p>Toxina botulínica, bioestimuladores, microagulhamento, ultrassom microfocado e limpeza de pele.</p>
+      </article>
+      <article class="card">
+        <svg viewBox='0 0 1200 700' xmlns='http://www.w3.org/2000/svg' role='img' aria-label='Harmonização corporal'><rect width='100%' height='100%' fill='#fde8f2'/><path d='M120,600 C240,520 300,420 420,380 C540,340 700,380 820,340 C940,300 1000,220 1080,240 L1080,640 L120,640 Z' fill='#f59ac3' opacity='.35'/></svg>
+        <h3>Harmonização Corporal</h3>
+        <p>Redução de gordura, celulite e flacidez, drenagem linfática e criolipólise.</p>
+      </article>
+      <article class="card">
+        <svg viewBox='0 0 1200 700' xmlns='http://www.w3.org/2000/svg' role='img' aria-label='Depilação a LED'><rect width='100%' height='100%' fill='#fff0f6'/><g opacity='.6'><rect x='160' y='220' width='80' height='260' rx='12' fill='#f59ac3'/><rect x='320' y='220' width='80' height='260' rx='12' fill='#f59ac3'/><rect x='480' y='220' width='80' height='260' rx='12' fill='#f59ac3'/><rect x='640' y='220' width='80' height='260' rx='12' fill='#f59ac3'/><rect x='800' y='220' width='80' height='260' rx='12' fill='#f59ac3'/></g></svg>
+        <h3>Depilação a LED</h3>
+        <p>Definitiva por áreas ou corpo inteiro. Atendimento feminino e masculino.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- METODOLOGIA -->
+  <section id="metodo" class="container reveal">
+    <div class="highlight">
+      <div>
+        <h2 class="section-title">Metodologia exclusiva</h2>
+        <p class="section-sub">Plano personalizado + tecnologia + acompanhamento.</p>
+        <div class="check"><span>✅</span>Consulta de avaliação com análise de objetivos e histórico.</div>
+        <div class="check"><span>✅</span>Protocolo combinado (crio + estímulos + hábitos) quando indicado.</div>
+        <div class="check"><span>✅</span>Acompanhamento de resultados com fotos e medições periódicas.</div>
+        <br>
+        <a class="cta" href="https://wa.me/5500000000000?text=Quero%20saber%20sobre%20o%20m%C3%A9todo" target="_blank" rel="noopener">Quero conhecer</a>
+      </div>
+      <svg viewBox='0 0 1400 900' xmlns='http://www.w3.org/2000/svg' role='img' aria-label='Aplicação de método exclusivo'><rect width='100%' height='100%' fill='#fde8f2'/><g transform='translate(160,140)'><rect x='0' y='0' width='360' height='240' rx='24' fill='#fff' stroke='#ffd9ea'/><rect x='420' y='0' width='360' height='240' rx='24' fill='#fff' stroke='#ffd9ea'/><rect x='840' y='0' width='360' height='240' rx='24' fill='#fff' stroke='#ffd9ea'/><rect x='0' y='300' width='360' height='240' rx='24' fill='#fff' stroke='#ffd9ea'/><rect x='420' y='300' width='360' height='240' rx='24' fill='#fff' stroke='#ffd9ea'/><rect x='840' y='300' width='360' height='240' rx='24' fill='#fff' stroke='#ffd9ea'/></g></svg>
+    </div>
+  </section>
+
+  <!-- DEPOIMENTOS (Slider simples) -->
+  <section id="depoimentos" class="container reveal">
+    <h2 class="section-title">O que as clientes dizem</h2>
+    <div class="slider" aria-label="depoimentos">
+      <div class="slides" id="slides">
+        <figure class="slide">
+          <div class="stars">★★★★★</div>
+          <blockquote>Experiência excelente do início ao fim. Atendimento atencioso e resultados visíveis!</blockquote>
+          <figcaption>— Kellen G.</figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="stars">★★★★★</div>
+          <blockquote>Ambiente acolhedor e muito profissional. Recomendo sem medo!</blockquote>
+          <figcaption>— Lucas B.</figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="stars">★★★★★</div>
+          <blockquote>Fiz a criolipólise e amei o acompanhamento e o cuidado no pós!</blockquote>
+          <figcaption>— Tânia S.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALERIA antes/depois -->
+  <section id="antes_depois" class="container reveal">
+    <h2 class="section-title">Antes & depois</h2>
+    <p class="section-sub">Resultados reais de clientes (com autorização de imagem). Substitua por imagens reais quando desejar.</p>
+    <div class="gallery">
+      <svg viewBox='0 0 1200 1200' xmlns='http://www.w3.org/2000/svg' role='img' aria-label='Antes e depois 1'><defs><linearGradient id='ga' x1='0' y1='0' x2='1' y2='1'><stop offset='0%' stop-color='#fff0f6'/><stop offset='100%' stop-color='#fde8f2'/></linearGradient></defs><rect width='100%' height='100%' fill='url(#ga)'/><rect x='120' y='160' width='420' height='880' rx='40' fill='#fff' stroke='#ffd9ea'/><rect x='660' y='160' width='420' height='880' rx='40' fill='#fff' stroke='#ffd9ea'/><text x='330' y='1050' font-size='48' text-anchor='middle' fill='#e16aa2' font-family='Inter'>ANTES</text><text x='870' y='1050' font-size='48' text-anchor='middle' fill='#e16aa2' font-family='Inter'>DEPOIS</text></svg>
+      <svg viewBox='0 0 1200 1200' xmlns='http://www.w3.org/2000/svg' role='img' aria-label='Antes e depois 2'><rect width='100%' height='100%' fill='#fde8f2'/><circle cx='400' cy='600' r='280' fill='white'/><circle cx='800' cy='600' r='240' fill='white'/></svg>
+      <svg viewBox='0 0 1200 1200' xmlns='http://www.w3.org/2000/svg' role='img' aria-label='Antes e depois 3'><rect width='100%' height='100%' fill='#fff0f6'/><path d='M120,1000 C360,800 480,360 720,360 C900,360 1020,560 1080,720' stroke='#f59ac3' stroke-width='40' fill='none'/></svg>
+      <svg viewBox='0 0 1200 1200' xmlns='http://www.w3.org/2000/svg' role='img' aria-label='Antes e depois 4'><rect width='100%' height='100%' fill='#fde8f2'/><rect x='160' y='200' width='880' height='800' rx='40' fill='#fff' stroke='#ffd9ea'/><path d='M220 600 H1080' stroke='#ffd9ea' stroke-width='20'/></svg>
+    </div>
+  </section>
+
+  <!-- SOBRE -->
+  <section id="sobre" class="container about reveal">
+    <img 
+      src="https://images.unsplash.com/photo-1594824476967-48c8b964273f?q=80&w=1400&auto=format&fit=crop" 
+      alt="Profissional responsável"
+      style="width:100%;max-width:420px;height:340px;object-fit:cover;object-position:50% 18%;border-radius:12px;box-shadow:var(--sombra);display:block;"
+    />
+    <div>
+      <h2 class="section-title">Quem está por trás</h2>
+      <p class="section-sub">Responsável técnica – <strong>Seu Nome</strong> (CR...)</p>
+      <p>Com X anos de experiência, sou especialista em harmonização corporal e facial, com pós-graduação em procedimentos injetáveis. Meu foco é unir técnica e acolhimento para transformar a relação com o espelho.</p>
+      <div class="badges">
+        <span class="badge">⚕️ Procedimentos seguros</span>
+        <span class="badge">🧩 Protocolos personalizados</span>
+        <span class="badge">📈 Acompanhamento contínuo</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLÍNICA / ESTRUTURA -->
+  <section id="clinica" class="container reveal">
+    <h2 class="section-title">Conheça nosso espaço</h2>
+    <p class="section-sub">Ambiente acolhedor, higienizado e pensado para o seu bem-estar.</p>
+    <div class="grid">
+      <article class="card"><svg viewBox='0 0 1200 700' xmlns='http://www.w3.org/2000/svg' role='img' aria-label='Recepção'><rect width='100%' height='100%' fill='#fde8f2'/><rect x='120' y='200' width='960' height='320' rx='24' fill='#fff' stroke='#ffd9ea'/><rect x='160' y='240' width='360' height='120' rx='12' fill='#fff0f6'/><rect x='540' y='240' width='360' height='200' rx='12' fill='#fff0f6'/></svg><h3>Recepção</h3></article>
+      <article class="card"><svg viewBox='0 0 1200 700' xmlns='http://www.w3.org/2000/svg' role='img' aria-label='Salas de procedimento'><rect width='100%' height='100%' fill='#fff0f6'/><rect x='140' y='140' width='300' height='420' rx='24' fill='#fff' stroke='#ffd9ea'/><rect x='500' y='140' width='300' height='420' rx='24' fill='#fff' stroke='#ffd9ea'/><rect x='860' y='140' width='200' height='420' rx='24' fill='#fff' stroke='#ffd9ea'/></svg><h3>Salas de procedimento</h3></article>
+      <article class="card"><svg viewBox='0 0 1200 700' xmlns='http://www.w3.org/2000/svg' role='img' aria-label='Equipamentos modernos'><rect width='100%' height='100%' fill='#fde8f2'/><rect x='260' y='180' width='680' height='320' rx='24' fill='#fff' stroke='#ffd9ea'/><circle cx='520' cy='340' r='60' fill='#f59ac3' opacity='.6'/><rect x='320' y='240' width='400' height='60' rx='10' fill='#fff0f6'/></svg><h3>Equipamentos modernos</h3></article>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="container cta-section reveal">
+    <h2 style="margin:0">Pronta para sua avaliação?</h2>
+    <p class="section-sub" style="margin:0">Clique no botão e fale direto pelo WhatsApp.</p>
+    <a class="cta" style="justify-self:start" href="https://wa.me/5500000000000?text=Ol%C3%A1!%20Quero%20agendar%20uma%20avalia%C3%A7%C3%A3o" target="_blank" rel="noopener">Agendar agora</a>
+  </section>
+
+  <!-- CONTATO / LOCALIZAÇÃO -->
+  <section id="contato" class="container reveal">
+    <h2 class="section-title">Onde estamos</h2>
+    <div class="grid" style="grid-template-columns:1.1fr .9fr">
+      <div class="card">
+        <h3>Endereço</h3>
+        <p>Rua Exemplo, 123 – Bairro – Cidade/SP</p>
+        <p><strong>Horário:</strong> Seg–Sex 08:30–19:00 • Sáb 08:30–13:00</p>
+        <p><strong>WhatsApp:</strong> <a href="https://wa.me/5500000000000" target="_blank" rel="noopener">(11) 90000‑0000</a></p>
+        <div class="social">
+          <a href="https://www.instagram.com/seuusuario" target="_blank" aria-label="Instagram">📷</a>
+          <a href="https://www.facebook.com/seuusuario" target="_blank" aria-label="Facebook">📘</a>
+          <a href="mailto:contato@seudominio.com" aria-label="E-mail">✉️</a>
+        </div>
+      </div>
+      <div class="card" style="min-height:300px;display:grid;place-items:center;background:linear-gradient(90deg,#fff,#fff0f6,#fff);background-size:200% 100%;animation:shimmer 3s linear infinite;border:1px dashed #ffd9ea">
+        <div style="text-align:center;color:#8a506a">
+          <strong>Mapa</strong><br/>
+            <iframe title="Mapa" class="card" style="border:0;min-height:300px" loading="lazy" allowfullscreen
+              src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14632.000000!2d-46.6388!3d-23.5489!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zU8OjbyBQYXVsbywgQlI!5e0!3m2!1spt-BR!2sbr!4v1700000000000">
+            </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container foot-grid">
+      <div class="foot">
+        <h4>Seu Nome Estética</h4>
+        <p>CR... | CNPJ 00.000.000/0000-00</p>
+        <p>Todos os procedimentos seguem protocolos de segurança e avaliação prévia.</p>
+      </div>
+      <div class="foot">
+        <h4>Links</h4>
+        <p><a href="#servicos">Serviços</a></p>
+        <p><a href="#metodo">Metodologia</a></p>
+        <p><a href="#depoimentos">Depoimentos</a></p>
+      </div>
+      <div class="foot">
+        <h4>Atendimento</h4>
+        <p>Seg–Sex 08:30–19:00</p>
+        <p>Sáb 08:30–13:00</p>
+        <a class="cta" href="https://wa.me/5500000000000?text=Ol%C3%A1!%20Quero%20agendar%20uma%20avalia%C3%A7%C3%A3o" target="_blank" rel="noopener">Agendar pelo Whatsapp</a>
+      </div>
+    </div>
+    <div class="container copyright">
+      © <span id="year"></span> Seu Nome Estética — Todos os direitos reservados.
+    </div>
+  </footer>
+
+  <script>
+    // Ano automático
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Slider simples
+    const slides = document.getElementById('slides');
+    let i = 0;
+    setInterval(()=>{ i = (i+1)%3; slides.style.transform = `translateX(-${i*100}%)`; }, 5000);
+
+    // Revelar on-scroll
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+    },{threshold:.12});
+    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  </script>
+</body>
+</html>
