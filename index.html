@@ -355,6 +355,55 @@
     }
   }
 
+  /* ====== REFINOS HEADER + FOOTER (MOBILE) ====== */
+
+  /* 1) Logo-title centralizado no mobile e com respiro */
+  @media (max-width: 768px) {
+    /* centraliza o grupo da marca no topo */
+    header .nav { justify-content: center; }
+    .brand {
+      width: 100%;
+      flex-direction: column;   /* título + subtítulo em coluna */
+      align-items: center;      /* centraliza horizontalmente */
+      gap: 6px;
+    }
+
+    /* garante que o título não “grude” na esquerda */
+    .logo-title, .logo-subtitle {
+      text-align: center;
+      margin-left: 0;
+    }
+  }
+
+  /* 2) Mais espaço entre “Atendimento”, botão e rodapé no mobile */
+  @media (max-width: 768px) {
+    /* coluna do Atendimento (é a última .foot no seu footer) */
+    footer .foot:last-child h4 { 
+      margin-bottom: 10px; 
+    }
+    footer .foot:last-child .cta {
+      display: block;
+      width: 100%;
+      text-align: center;
+      margin-top: 14px;     /* espaço entre “Atendimento” e o botão */
+      margin-bottom: 18px;  /* espaço entre o botão e as demais infos */
+    }
+
+    /* deixa um vão extra antes do aviso final */
+    .copyright {
+      font-size: 12px !important;  /* menor no mobile */
+      margin-top: 20px !important;
+      padding-bottom: 16px !important;
+      text-align: center;
+    }
+  }
+
+  /* toque pequeno no desktop: um respiro sutil à esquerda do bloco da marca */
+  @media (min-width: 769px) {
+    .brand { padding-left: 2px; } /* bem discreto, não desloca o layout */
+  }
+
+
   </style>
 
   <!-- SEO LocalBusiness (ajuste os campos) -->
