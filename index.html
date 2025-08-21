@@ -173,15 +173,6 @@
       .badges { gap: 10px; }
       .badge { padding: 8px 10px; }
 
-      /* 2) Depoimentos: largura fixa por slide + reset de margins */
-      .slider { padding: 0; }
-      .slides { display: flex; gap: 0; will-change: transform; }
-      .slide { 
-        min-width: 100vw;           /* garante que cada slide ocupe 100% da viewport */
-        box-sizing: border-box;
-        padding: 18px 22px; 
-        margin: 0; 
-      }
       .slide blockquote, .slide figcaption, .slide .stars { margin: 0 0 8px; }
       .slide .stars { letter-spacing: 3px; }
       /* Se notar que está “pulando” 2px entre slides por causa do padding do container,
@@ -210,6 +201,67 @@
 
     /* microfix extra para o slider em qualquer largura */
     figure.slide { margin: 0; }
+
+    @media (max-width: 768px) {
+    /* Força o container a ocupar toda largura e centralizar */
+    .container {
+      width: 100% !important;
+      max-width: 100% !important;
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 20px;
+      padding-right: 20px;
+      box-sizing: border-box;
+    }
+  }
+
+  /* ====== TESTEMUNHOS – FIX PRECISO ====== */
+  .slider { 
+    overflow: hidden; 
+    border-radius: var(--radius);
+    box-shadow: var(--sombra);
+    background: var(--branco);
+  }
+
+  .slides {
+    display: flex;
+    gap: 0;                 /* sem espaçamento entre os slides */
+    will-change: transform;
+    transition: transform .45s ease;
+  }
+
+  figure.slide {
+    flex: 0 0 100%;         /* cada slide ocupa 100% da largura do trilho */
+    margin: 0;              /* zera margens padrão do figure */
+    padding: 0;             /* sem padding no slide (vai no wrapper interno) */
+    box-sizing: border-box;
+  }
+
+  .slide .inner {
+    padding: 18px 22px;     /* respiro interno real */
+  }
+
+  .slide .stars { letter-spacing: 3px; margin-bottom: 8px; }
+  .slide blockquote { margin: 0 0 8px; }
+  .slide figcaption { margin: 0; color: var(--cinza); }
+
+  /* no mobile, mantém igual; se quiser ainda mais “colado”, ajuste aqui */
+  @media (max-width: 768px) {
+    .slide .inner { padding: 18px 20px; }
+  }
+
+  /* --- Override final para o carrossel no mobile --- */
+  @media (max-width: 768px) {
+    /* anula o patch antigo que usa 100vw e padding no .slide */
+    .slide {
+      min-width: 100% !important;
+      padding: 0 !important;
+    }
+    /* mantém o respiro no wrapper interno do slide */
+    .slide .inner {
+      padding: 18px 20px !important;
+    }
+  }
   </style>
 
   <!-- SEO LocalBusiness (ajuste os campos) -->
@@ -358,25 +410,31 @@
     </div>
   </section>
 
-  <!-- DEPOIMENTOS (Slider simples) -->
+  <!-- DEPOIMENTOS (Slider com largura real do trilho) -->
   <section id="depoimentos" class="container reveal">
     <h2 class="section-title">O que as clientes dizem</h2>
     <div class="slider" aria-label="depoimentos">
       <div class="slides" id="slides">
         <figure class="slide">
-          <div class="stars">★★★★★</div>
-          <blockquote>Experiência excelente do início ao fim. Atendimento atencioso e resultados visíveis!</blockquote>
-          <figcaption>— Kellen G.</figcaption>
+          <div class="inner">
+            <div class="stars">★★★★★</div>
+            <blockquote>Experiência excelente do início ao fim. Atendimento atencioso e resultados visíveis!</blockquote>
+            <figcaption>— Kellen G.</figcaption>
+          </div>
         </figure>
         <figure class="slide">
-          <div class="stars">★★★★★</div>
-          <blockquote>Ambiente acolhedor e muito profissional. Recomendo sem medo!</blockquote>
-          <figcaption>— Lucas B.</figcaption>
+          <div class="inner">
+            <div class="stars">★★★★★</div>
+            <blockquote>Ambiente acolhedor e muito profissional. Recomendo sem medo!</blockquote>
+            <figcaption>— Lucas B.</figcaption>
+          </div>
         </figure>
         <figure class="slide">
-          <div class="stars">★★★★★</div>
-          <blockquote>Fiz a criolipólise e amei o acompanhamento e o cuidado no pós!</blockquote>
-          <figcaption>— Tânia S.</figcaption>
+          <div class="inner">
+            <div class="stars">★★★★★</div>
+            <blockquote>Fiz a criolipólise e amei o acompanhamento e o cuidado no pós!</blockquote>
+            <figcaption>— Tânia S.</figcaption>
+          </div>
         </figure>
       </div>
     </div>
@@ -467,7 +525,8 @@
     <div class="container foot-grid">
       <div class="foot">
         <h4>Lorenna Estética</h4>
-        <p>CR... | CNPJ 00.000.000/0000-00</p>
+        <p>CR...</p>
+        <p>CNPJ 00.000.000/0000-00</p>
         <p>Todos os procedimentos seguem protocolos de segurança e avaliação prévia.</p>
       </div>
       <div class="foot">
@@ -492,10 +551,36 @@
     // Ano automático
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Slider simples
+    // Slider com passo em pixels (alinha 100%)
     const slides = document.getElementById('slides');
-    let i = 0;
-    setInterval(()=>{ i = (i+1)%3; slides.style.transform = `translateX(-${i*100}%)`; }, 5000);
+    const slider = slides?.parentElement; // .slider
+    let idx = 0;
+    let total = slides ? slides.children.length : 0;
+
+    function go(n) {
+      idx = (n + total) % total;
+      const w = slider.getBoundingClientRect().width; // largura real do trilho
+      slides.style.transform = `translateX(-${idx * w}px)`;
+    }
+
+    let timer = null;
+    function start() {
+      stop();
+      timer = setInterval(() => go(idx + 1), 5000);
+    }
+    function stop() {
+      if (timer) clearInterval(timer);
+    }
+
+    window.addEventListener('resize', () => {
+      // Reposiciona no slide atual quando a largura mudar (evita “meio pixel”)
+      go(idx);
+    });
+
+    if (slides && slider) {
+      go(0);
+      start();
+    }
 
     // Revelar on-scroll
     const io = new IntersectionObserver((entries)=>{
