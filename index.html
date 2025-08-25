@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
   <title>Lorenna Estética | Beleza & bem-estar</title>
   <meta name="description"
     content="Reduza medidas, melhore a firmeza da pele e conquiste a silhueta que valoriza sua beleza natural. Tratamentos corporais e faciais com método personalizado em São José dos Campos." />
@@ -839,9 +839,9 @@
       grid-template-columns: repeat(2, 1fr);
     }
 
-    @media (max-width: 980px){
+    @media (max-width: 980px) {
       #servicos .grid,
-      #clinica .grid{
+      #clinica .grid {
         grid-template-columns: 1fr !important;
       }
     }
@@ -857,6 +857,48 @@
     @media (max-width: 768px) {
       #servicos .service-art {
         height: 100px;
+      }
+    }
+
+    /* ===== FIX OVERFLOW MOBILE ===== */
+    html,
+    body {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+      /* mata rolagem lateral */
+    }
+
+    /* garante que nenhum container “estoure” a viewport */
+    :where(.container, header, nav, .hero, section, footer, .slider, .slides, .gallery, .cta-section, .map-container) {
+      max-width: 100% !important;
+    }
+
+    /* SVGs e iframes nunca excedem a largura da tela */
+    img,
+    svg,
+    iframe {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Causa comum do “vazio” à direita: a blob desfocada */
+    @media (max-width: 768px) {
+      .blob {
+        display: none !important;
+      }
+
+      /* some no mobile */
+    }
+
+    /* Garante 1 coluna no mobile (mesmo se houver style inline) */
+    @media (max-width: 980px) {
+
+      #servicos .grid,
+      #clinica .grid,
+      #contato .grid {
+        grid-template-columns: 1fr !important;
       }
     }
   </style>
@@ -1022,15 +1064,15 @@
 
   <!-- METODOLOGIA -->
   <section id="metodo" class="container reveal">
-      <div>
-        <h2 class="section-title">Metodologia exclusiva</h2>
-        <p class="section-sub">Plano personalizado + tecnologia + acompanhamento</p>
-        <div class="check"><span>✅</span>Consulta de avaliação com análise de objetivos e histórico</div>
-        <div class="check"><span>✅</span>Protocolo combinado quando indicado</div>
-        <div class="check"><span>✅</span>Acompanhamento de resultados com fotos e medições periódicas</div>
-        <br />
-        <a class="cta" href="https://wa.me/5512997956374?text=Quero%20saber%20sobre%20o%20m%C3%A9todo" target="_blank"
-          rel="noopener">Quero conhecer</a>
+    <div>
+      <h2 class="section-title">Metodologia exclusiva</h2>
+      <p class="section-sub">Plano personalizado + tecnologia + acompanhamento</p>
+      <div class="check"><span>✅</span>Consulta de avaliação com análise de objetivos e histórico</div>
+      <div class="check"><span>✅</span>Protocolo combinado quando indicado</div>
+      <div class="check"><span>✅</span>Acompanhamento de resultados com fotos e medições periódicas</div>
+      <br />
+      <a class="cta" href="https://wa.me/5512997956374?text=Quero%20saber%20sobre%20o%20m%C3%A9todo" target="_blank"
+        rel="noopener">Quero conhecer</a>
     </div>
   </section>
 
@@ -1346,7 +1388,7 @@
   <!-- CONTATO / LOCALIZAÇÃO -->
   <section id="contato" class="container reveal">
     <h2 class="section-title">Onde estamos</h2>
-    <div class="grid" style="grid-template-columns:1.1fr .9fr">
+    <div class="grid">
       <div class="card">
         <p><strong>Endereço:</strong>
           <br />Avenida Engenheiro Francisco José Longo, 580
