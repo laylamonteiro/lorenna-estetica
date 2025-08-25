@@ -1406,6 +1406,7 @@
     let total = slides ? slides.children.length : 0;
 
     function go(n) {
+      if (!slides || !slider) return;
       idx = (n + total) % total;
       const w = slider.getBoundingClientRect().width; // largura real do trilho
       slides.style.transform = `translateX(-${idx * w}px)`;
