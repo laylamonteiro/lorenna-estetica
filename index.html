@@ -343,7 +343,7 @@
     }
 
     section#antes_depois {
-      margin-bottom: 0px
+      margin-bottom: 24px
     }
 
     section#sobre {
@@ -1224,6 +1224,77 @@
     @media (max-width: 980px) {
       .plasma-img {
         max-height: 280px;
+      }
+    }
+
+    /* ===== Layout desktop padrão ===== */
+    #sobre {
+      display: flex;
+      align-items: center;
+      gap: clamp(16px, 3vw, 32px);
+    }
+
+    #sobre>div {
+      flex: 1 1 0;
+    }
+
+    #sobre>img {
+      flex: 0 0 auto;
+    }
+
+    /* ===== Imagem com o MESMO corte em web e mobile ===== */
+    #sobre>img {
+      /* força quadrado em todos os breakpoints */
+      aspect-ratio: 1 / 1;
+      height: auto !important;
+      /* sobrescreve o height inline (340px) */
+      width: 100%;
+      /* respeita o max-width inline (420px) */
+      object-fit: cover;
+      object-position: 50% 18%;
+      /* mesmo foco que você já usa */
+      display: block;
+      border-radius: 12px;
+      box-shadow: var(--sombra);
+    }
+
+    /* ===== Mobile: ordem Título → Foto → Texto → Badges ===== */
+    @media (max-width: 768px) {
+      #sobre {
+        display: grid;
+        grid-template-areas:
+          "title"
+          "img"
+          "text"
+          "badges";
+        gap: 16px;
+      }
+
+      #sobre>div {
+        display: contents;
+      }
+
+      /* “sobe” h2, p e .badges para o grid */
+
+      #sobre h2 {
+        grid-area: title;
+      }
+
+      #sobre img {
+        grid-area: img;
+        width: 100%;
+      }
+
+      #sobre p {
+        grid-area: text;
+        margin: 0;
+      }
+
+      #sobre .badges {
+        grid-area: badges;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
       }
     }
   </style>
