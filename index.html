@@ -963,6 +963,262 @@
     #servicos .grid {
       margin-top: 0 !important;
     }
+
+    /* ====== Antes & Depois (escopo isolado .ba-*) ====== */
+    .ba-section {
+      padding: clamp(40px, 6vw, 80px) 0;
+      background: #fff;
+    }
+
+    .ba-header p {
+      margin: 0 0 24px;
+      color: #555;
+      font-size: 0.95rem;
+    }
+
+    .ba-carousel {
+      position: relative;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .ba-viewport {
+      overflow: hidden;
+      width: 100%;
+    }
+
+    .ba-track {
+      display: flex;
+      gap: 12px;
+      will-change: transform;
+      transform: translateX(0);
+      transition: transform 320ms ease;
+      padding: 2px;
+      /* micro padding pra evitar recorte de box-shadow em alguns navegadores */
+    }
+
+    .ba-item {
+      flex: 0 0 auto;
+      width: 100%;
+      max-width: none;
+      list-style: none;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, .08);
+      background: #f7f7f7;
+    }
+
+    /* Mantém proporção estável (ajuste a proporção conforme suas fotos) */
+    .ba-figure {
+      margin: 0;
+      position: relative;
+      aspect-ratio: 4 / 5;
+      /* retrato: 4:5 combina bem com rosto/corpo */
+      /* Se preferir 3/4 ou 1/1, altere aqui. */
+    }
+
+    .ba-figure img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      /* cobre sem distorcer, pode cortar bordas */
+      object-position: center;
+      display: block;
+    }
+
+    .ba-caption {
+      display: none;
+      /* habilite se quiser legenda */
+      padding: 10px 12px;
+      font-size: 0.875rem;
+      color: #333;
+      background: #fff;
+      border-top: 1px solid #eee;
+    }
+
+    .ba-nav {
+      appearance: none;
+      border: none;
+      background: #f6e7f0;
+      color: #a73c76;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      font-size: 18px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, .08);
+      display: grid;
+      place-items: center;
+      transition: transform 120ms ease, opacity 120ms ease, background 120ms ease;
+    }
+
+    .ba-nav:hover {
+      transform: translateY(-1px);
+      background: #f2d8e7;
+    }
+
+    .ba-nav:disabled {
+      opacity: .45;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Responsividade — define quantas imagens aparecem por vez */
+    :root {
+      --ba-slides-per-view: 1;
+      /* default mobile */
+      --ba-gap: 16px;
+    }
+
+    @media (min-width: 640px) {
+      :root {
+        --ba-slides-per-view: 2;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      :root {
+        --ba-slides-per-view: 3;
+      }
+    }
+
+    @media (min-width: 1400px) {
+      :root {
+        --ba-slides-per-view: 4;
+      }
+    }
+
+    /* Largura dos itens baseada em slides-per-view */
+    .ba-viewport .ba-item {
+      width: calc((100% - (var(--ba-gap) * (var(--ba-slides-per-view) - 1))) / var(--ba-slides-per-view));
+    }
+
+    /* Reduz o foco visível dos botões para acessibilidade */
+    .ba-nav:focus-visible {
+      outline: 2px solid #a73c76;
+      outline-offset: 2px;
+    }
+
+    /* ===== Lightbox ===== */
+    .ba-lightbox {
+      position: fixed;
+      inset: 0;
+      display: none;
+      /* vira grid ao abrir */
+      place-items: center;
+      background: rgba(0, 0, 0, .66);
+      z-index: 9999;
+      padding: 16px;
+    }
+
+    .ba-lightbox.is-open {
+      display: grid;
+    }
+
+    .ba-lightbox__figure {
+      margin: 0;
+      width: 100%;
+      max-width: min(1200px, 96vw);
+      height: auto;
+      max-height: 90vh;
+      display: grid;
+      place-items: center;
+    }
+
+    .ba-lightbox__img {
+      max-width: 100%;
+      max-height: 90vh;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, .4);
+      border-radius: 12px;
+      background: #111;
+      /* evita “flash” ao carregar */
+    }
+
+    .ba-lightbox__close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 44px;
+      height: 44px;
+      border: 0;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .9);
+      color: #111;
+      font-size: 22px;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+    }
+
+    .ba-lightbox__nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 48px;
+      height: 48px;
+      border: 0;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, .9);
+      color: #111;
+      font-size: 28px;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+    }
+
+    .ba-lightbox__prev {
+      left: 10px;
+    }
+
+    .ba-lightbox__next {
+      right: 10px;
+    }
+
+    .ba-lightbox__nav:disabled {
+      opacity: .35;
+      cursor: not-allowed;
+    }
+
+    /* toque mobile mais confortável */
+    @media (pointer: coarse) {
+      .ba-lightbox__nav {
+        width: 56px;
+        height: 56px;
+        font-size: 32px;
+      }
+
+      .ba-lightbox__close {
+        width: 48px;
+        height: 48px;
+        font-size: 24px;
+      }
+    }
+
+    /* Imagem da seção Jato de Plasma */
+    .plasma-img {
+      display: block;
+      width: 100%;
+      max-height: 420px;
+      object-fit: cover;
+      object-position: center;
+      border-radius: var(--radius);
+      box-shadow: var(--sombra);
+      margin: 0 auto;
+      background: #fff0f6;
+    }
+
+    @media (max-width: 980px) {
+      .plasma-img {
+        max-height: 280px;
+      }
+    }
   </style>
 
   <!-- SEO LocalBusiness -->
@@ -1246,16 +1502,8 @@
         <a class="cta" href="https://wa.me/5512997956374?text=Quero%20saber%20sobre%20Jato%20de%20Plasma"
           target="_blank" rel="noopener" aria-label="Falar no WhatsApp sobre Jato de Plasma">Tirar dúvidas</a>
       </div>
-      <svg viewBox='0 0 1400 900' xmlns='http://www.w3.org/2000/svg' role='img'
-        aria-label='Aplicação de Jato de Plasma'>
-        <rect width='100%' height='100%' fill='#fff0f6' />
-        <g opacity='.6' transform='translate(180,180)'>
-          <rect x='0' y='0' width='180' height='360' rx='18' fill='#f59ac3' />
-          <rect x='240' y='0' width='180' height='360' rx='18' fill='#f59ac3' />
-          <rect x='480' y='0' width='180' height='360' rx='18' fill='#f59ac3' />
-          <rect x='720' y='0' width='180' height='360' rx='18' fill='#f59ac3' />
-        </g>
-      </svg>
+      <img src="img/lorenna_2.PNG" alt="Aplicação de Jato de Plasma" class="plasma-img" loading="lazy" width="1400"
+        height="900" />
     </div>
   </section>
 
@@ -1302,63 +1550,38 @@
   </section>
 
   <!-- GALERIA antes/depois -->
-  <section id="antes_depois" class="container reveal">
-    <h2 class="section-title">Antes & depois</h2>
-    <p class="section-sub">De insegurança para confiança ✨ <i>Resultados reais de clientes</i></p>
-    <div class="gallery">
-      <!-- placeholders (substituir por imagens reais) -->
-      <svg viewBox='0 0 1200 1200' xmlns='http://www.w3.org/2000/svg' role='img' aria-label='Antes e depois 1'>
-        <defs>
-          <linearGradient id='ga' x1='0' y1='0' x2='1' y2='1'>
-            <stop offset='0%' stop-color='#fff0f6' />
-            <stop offset='100%' stop-color='#fde8f2' />
-          </linearGradient>
-        </defs>
-        <rect width='100%' height='100%' fill='url(#ga)' />
-        <rect x='120' y='160' width='420' height='880' rx='40' fill='#fff' stroke='#ffd9ea' />
-        <rect x='660' y='160' width='420' height='880' rx='40' fill='#fff' stroke='#ffd9ea' />
-        <text x='330' y='1050' font-size='48' text-anchor='middle' fill='#e16aa2' font-family='Inter'>ANTES</text>
-        <text x='870' y='1050' font-size='48' text-anchor='middle' fill='#e16aa2' font-family='Inter'>DEPOIS</text>
-      </svg>
-      <svg viewBox='0 0 1200 1200' xmlns='http://www.w3.org/2000/svg' role='img' aria-label='Antes e depois 2'>
-        <defs>
-          <linearGradient id='gb' x1='0' y1='0' x2='1' y2='1'>
-            <stop offset='0%' stop-color='#fff0f6' />
-            <stop offset='100%' stop-color='#fde8f2' />
-          </linearGradient>
-        </defs>
-        <rect width='100%' height='100%' fill='url(#gb)' />
-        <rect x='120' y='160' width='420' height='880' rx='40' fill='#fff' stroke='#ffd9ea' />
-        <rect x='660' y='160' width='420' height='880' rx='40' fill='#fff' stroke='#ffd9ea' />
-        <text x='330' y='1050' font-size='48' text-anchor='middle' fill='#e16aa2' font-family='Inter'>ANTES</text>
-        <text x='870' y='1050' font-size='48' text-anchor='middle' fill='#e16aa2' font-family='Inter'>DEPOIS</text>
-      </svg>
-      <svg viewBox='0 0 1200 1200' xmlns='http://www.w3.org/2000/svg' role='img' aria-label='Antes e depois 3'>
-        <defs>
-          <linearGradient id='gc' x1='0' y1='0' x2='1' y2='1'>
-            <stop offset='0%' stop-color='#fff0f6' />
-            <stop offset='100%' stop-color='#fde8f2' />
-          </linearGradient>
-        </defs>
-        <rect width='100%' height='100%' fill='url(#gc)' />
-        <rect x='120' y='160' width='420' height='880' rx='40' fill='#fff' stroke='#ffd9ea' />
-        <rect x='660' y='160' width='420' height='880' rx='40' fill='#fff' stroke='#ffd9ea' />
-        <text x='330' y='1050' font-size='48' text-anchor='middle' fill='#e16aa2' font-family='Inter'>ANTES</text>
-        <text x='870' y='1050' font-size='48' text-anchor='middle' fill='#e16aa2' font-family='Inter'>DEPOIS</text>
-      </svg>
-      <svg viewBox='0 0 1200 1200' xmlns='http://www.w3.org/2000/svg' role='img' aria-label='Antes e depois 4'>
-        <defs>
-          <linearGradient id='gd' x1='0' y1='0' x2='1' y2='1'>
-            <stop offset='0%' stop-color='#fff0f6' />
-            <stop offset='100%' stop-color='#fde8f2' />
-          </linearGradient>
-        </defs>
-        <rect width='100%' height='100%' fill='url(#gd)' />
-        <rect x='120' y='160' width='420' height='880' rx='40' fill='#fff' stroke='#ffd9ea' />
-        <rect x='660' y='160' width='420' height='880' rx='40' fill='#fff' stroke='#ffd9ea' />
-        <text x='330' y='1050' font-size='48' text-anchor='middle' fill='#e16aa2' font-family='Inter'>ANTES</text>
-        <text x='870' y='1050' font-size='48' text-anchor='middle' fill='#e16aa2' font-family='Inter'>DEPOIS</text>
-      </svg>
+  <section id="antes_depois" class="section ba-section" aria-label="Antes e Depois">
+    <div class="container ba-container">
+      <header class="ba-header">
+        <h2 class="section-title">Antes & depois</h2>
+        <p class="section-sub">De insegurança para confiança ✨ <i>Resultados reais de clientes</i></p>
+      </header>
+
+
+      <div class="ba-carousel" role="region" aria-roledescription="carrossel" aria-label="Galeria de Antes e Depois">
+        <button class="ba-nav ba-prev" aria-label="Imagem anterior" disabled>
+          &lt;
+        </button>
+
+        <div class="ba-viewport">
+          <ul class="ba-track" aria-live="polite">
+            <!-- Os itens do carrossel são gerados via JS com base no array 'baImages' -->
+          </ul>
+        </div>
+
+        <button class="ba-nav ba-next" aria-label="Próxima imagem" disabled>
+          &gt;
+        </button>
+      </div>
+    </div>
+    <!-- Lightbox (invisível até abrir) -->
+    <div class="ba-lightbox" aria-hidden="true" role="dialog" aria-modal="true">
+      <button class="ba-lightbox__close" aria-label="Fechar (ESC)">×</button>
+      <button class="ba-lightbox__nav ba-lightbox__prev" aria-label="Imagem anterior">‹</button>
+      <figure class="ba-lightbox__figure">
+        <img class="ba-lightbox__img" alt="Imagem ampliada de Antes & Depois" />
+      </figure>
+      <button class="ba-lightbox__nav ba-lightbox__next" aria-label="Próxima imagem">›</button>
     </div>
   </section>
 
@@ -1569,7 +1792,7 @@
     (function () {
       const svgs = document.querySelectorAll('#servicos .service-art');
       const mq = window.matchMedia('(max-width: 980px)');
-      let teardown = () => {}; // remove listeners/observers anteriores
+      let teardown = () => { }; // remove listeners/observers anteriores
       let rafId = null;
 
       // calcula e aplica dash nos paths de cada SVG
@@ -1593,7 +1816,7 @@
           rafId = null;
           const vh = window.innerHeight || document.documentElement.clientHeight;
           const start = vh * 0.12;  // começa a desenhar quando encosta ~12% do topo
-          const end   = vh * 0.88;  // termina perto de 88%
+          const end = vh * 0.88;  // termina perto de 88%
 
           svgs.forEach(svg => {
             const rect = svg.getBoundingClientRect();
@@ -1605,7 +1828,7 @@
                 const L = p.__len || p.getTotalLength();
                 p.style.strokeDashoffset = (1 - ratio) * L;
                 p.style.opacity = 0.25 + 0.65 * ratio; // 0.25 → 0.9
-              } catch (e) {}
+              } catch (e) { }
             });
           });
         };
@@ -1678,6 +1901,188 @@
       else mq.addListener(setup);
     })();
   </script>
+
+  <script>
+    (function () {
+      // =======================
+      // Antes & Depois Carousel
+      // =======================
+
+      // use exatamente os mesmos nomes de arquivo já no /img
+      const baImages = [
+        "antes_depois_1.jpg",
+        "antes_depois_2.jpg",
+        "antes_depois_3.jpg",
+        "antes_depois_4.jpg",
+        "antes_depois_5.jpg",
+        "antes_depois_6.jpg",
+        "antes_depois_7.jpg",
+        "antes_depois_8.PNG",
+        "antes_depois_9.PNG",
+        "antes_depois_10.PNG",
+        "antes_depois_11.PNG",
+        "antes_depois_12.PNG",
+      ];
+      if (!Array.isArray(baImages) || baImages.length === 0) return;
+
+      const $section = document.querySelector('#antes_depois'); // << CORRETO
+      if (!$section) return;
+
+      const $track = $section.querySelector('.ba-track');
+      const $prevBtn = $section.querySelector('.ba-prev');
+      const $nextBtn = $section.querySelector('.ba-next');
+      const $viewport = $section.querySelector('.ba-viewport');
+
+      // --- GERA OS ITENS NA TRACK ---
+      const frag = document.createDocumentFragment();
+      baImages.forEach((file, idx) => {
+        const li = document.createElement('li');
+        li.className = 'ba-item';
+        li.innerHTML = `
+      <figure class="ba-figure">
+        <img loading="lazy" decoding="async" src="img/${file}" alt="Antes e Depois ${idx + 1}" />
+      </figure>
+    `;
+        frag.appendChild(li);
+      });
+      $track.appendChild(frag);
+
+      // --- ESTADO & NAVEGAÇÃO DO CARROSSEL ---
+      const state = { index: 0, perView: 1, itemWidth: 0, gap: 12 };
+
+      function computePerView() {
+        const styles = getComputedStyle(document.documentElement);
+        const pv = parseInt(styles.getPropertyValue('--ba-slides-per-view').trim(), 10);
+        state.perView = Math.max(1, isNaN(pv) ? 1 : pv);
+      }
+      function clampIndex(i) {
+        const maxIndex = Math.max(0, baImages.length - state.perView);
+        return Math.min(Math.max(0, i), maxIndex);
+      }
+      function updateButtons() {
+        // carrossel infinito -> setas nunca desabilitadas
+        $prevBtn.disabled = false;
+        $nextBtn.disabled = false;
+      }
+      function updateTransform() {
+        const items = Array.from($track.children);
+        if (!items.length) return;
+        const itemRect = items[0].getBoundingClientRect();
+        state.itemWidth = itemRect.width;
+        const totalGap = state.index * state.gap;
+        const offset = (state.itemWidth * state.index) + totalGap;
+        $track.style.transform = `translateX(${-offset}px)`;
+        updateButtons();
+      }
+      function onResize() {
+        computePerView();
+        state.index = clampIndex(state.index);
+        const styles = getComputedStyle(document.documentElement);
+        const gap = parseInt(styles.getPropertyValue('--ba-gap').trim(), 10);
+        state.gap = isNaN(gap) ? 12 : gap;
+        requestAnimationFrame(updateTransform);
+      }
+      function goNext() {
+        const maxIndex = Math.max(0, baImages.length - state.perView);
+        state.index += state.perView;
+        if (state.index > maxIndex) {
+          // passou do fim -> volta ao começo
+          state.index = 0;
+        }
+        updateTransform();
+      }
+
+      function goPrev() {
+        const maxIndex = Math.max(0, baImages.length - state.perView);
+        state.index -= state.perView;
+        if (state.index < 0) {
+          // antes do início -> vai para o último “bloco” visível
+          state.index = maxIndex;
+        }
+        updateTransform();
+      }
+
+      $section.querySelector('.ba-carousel').addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') { e.preventDefault(); goPrev(); }
+        if (e.key === 'ArrowRight') { e.preventDefault(); goNext(); }
+      });
+
+      $prevBtn.addEventListener('click', goPrev);
+      $nextBtn.addEventListener('click', goNext);
+      window.addEventListener('resize', onResize);
+      onResize();
+
+      // --- LIGHTBOX (clique para ampliar) ---
+      const $lightbox = $section.querySelector('.ba-lightbox');
+      const $lbImg = $section.querySelector('.ba-lightbox__img');
+      const $lbClose = $section.querySelector('.ba-lightbox__close');
+      const $lbPrev = $section.querySelector('.ba-lightbox__prev');
+      const $lbNext = $section.querySelector('.ba-lightbox__next');
+
+      let itemImgs = [];
+      let srcs = [];
+      function refreshSrcs() {
+        itemImgs = Array.from($track.querySelectorAll('img'));
+        srcs = itemImgs.map(img => img.getAttribute('src'));
+      }
+
+      let lbIndex = 0, scrollLockPrev = '';
+
+      function iClamp(i) { return Math.min(Math.max(0, i), srcs.length - 1); }
+      function setLightboxImage(i) { $lbImg.src = srcs[i]; }
+      function updateLbButtons() {
+        // infinito -> nunca desabilita
+        $lbPrev.disabled = false;
+        $lbNext.disabled = false;
+      }
+      function openLightbox(index) {
+        lbIndex = index;
+        setLightboxImage(lbIndex);
+        scrollLockPrev = document.body.style.overflow;
+        document.body.style.overflow = 'hidden';
+        $lightbox.classList.add('is-open');
+        $lightbox.setAttribute('aria-hidden', 'false');
+        $lbClose.focus();
+        updateLbButtons();
+      }
+      function closeLightbox() {
+        $lightbox.classList.remove('is-open');
+        $lightbox.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = scrollLockPrev || '';
+      }
+      function goNextLb() {
+        lbIndex = (lbIndex + 1) % srcs.length;
+        setLightboxImage(lbIndex);
+        updateLbButtons();
+      }
+
+      function goPrevLb() {
+        lbIndex = (lbIndex - 1 + srcs.length) % srcs.length;
+        setLightboxImage(lbIndex);
+        updateLbButtons();
+      }
+
+      $track.addEventListener('click', (e) => {
+        const img = e.target.closest('img');
+        if (!img) return;
+        refreshSrcs();
+        const index = itemImgs.indexOf(img);
+        if (index >= 0) openLightbox(index);
+      });
+      $lbClose.addEventListener('click', closeLightbox);
+      $lbPrev.addEventListener('click', goPrevLb);
+      $lbNext.addEventListener('click', goNextLb);
+      $lightbox.addEventListener('click', (e) => { if (e.target === $lightbox) closeLightbox(); });
+      document.addEventListener('keydown', (e) => {
+        if ($lightbox.classList.contains('is-open')) {
+          if (e.key === 'Escape') closeLightbox();
+          if (e.key === 'ArrowLeft') goPrevLb();
+          if (e.key === 'ArrowRight') goNextLb();
+        }
+      });
+    })();
+  </script>
+
 </body>
 
 </html>
