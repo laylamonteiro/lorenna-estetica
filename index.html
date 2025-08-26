@@ -991,12 +991,11 @@
 
     .ba-track {
       display: flex;
-      gap: 12px;
+      gap: var(--ba-gap);
+      padding: 0;
       will-change: transform;
       transform: translateX(0);
       transition: transform 320ms ease;
-      padding: 2px;
-      /* micro padding pra evitar recorte de box-shadow em alguns navegadores */
     }
 
     .ba-item {
@@ -1071,7 +1070,15 @@
     :root {
       --ba-slides-per-view: 1;
       /* default mobile */
-      --ba-gap: 16px;
+      --ba-gap: 12px;
+    }
+
+    @media (max-width: 639px) {
+
+      /* escopo local pra não mexer em outras seções */
+      #antes_depois {
+        --ba-gap: 0px;
+      }
     }
 
     @media (min-width: 640px) {
@@ -1423,7 +1430,7 @@
           <li>Lifting de Seios</li>
           <li>Celulite</li>
           <li>Jato de Plasma</li>
-          <li>Diastáse</li>
+          <li>Diástase</li>
           <li>Flacidez</li>
           <li>Drenagem Linfática</li>
           <li>Redução de Gordura</li>
@@ -1977,7 +1984,7 @@
       function onResize() {
         computePerView();
         state.index = clampIndex(state.index);
-        const styles = getComputedStyle(document.documentElement);
+        const styles = getComputedStyle($section);
         const gap = parseInt(styles.getPropertyValue('--ba-gap').trim(), 10);
         state.gap = isNaN(gap) ? 12 : gap;
         requestAnimationFrame(updateTransform);
