@@ -1568,6 +1568,9 @@
   <script>
     (function () {
       const svgs = document.querySelectorAll('#servicos .service-art');
+      const mq = window.matchMedia('(max-width: 980px)');
+      let teardown = () => {}; // remove listeners/observers anteriores
+      let rafId = null;
 
       // calcula e aplica dash nos paths de cada SVG
       function initSvg(svg) {
@@ -1576,39 +1579,103 @@
             const L = p.getTotalLength();
             p.style.strokeDasharray = L;
             p.style.strokeDashoffset = L; // começa "invisível"
-            // opacidade inicial mais baixa
-            p.style.opacity = 0.25;
+            p.style.opacity = 0.25;       // opacidade inicial mais baixa
+            p.__len = L;                  // cache do comprimento p/ performance
           } catch (e) { /* ignora se não for um path geométrico */ }
         });
       }
 
-      svgs.forEach(initSvg);
-
-      // observa quanto do SVG está visível (0..1) e mapeia para o dash
-      const thresholds = Array.from({ length: 21 }, (_, i) => i / 20); // 0, .05, ..., 1
-      const io = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          const ratio = entry.intersectionRatio; // 0..1
-          const svg = entry.target;
-          svg.querySelectorAll('path').forEach(p => {
-            try {
-              const L = p.getTotalLength();
-              // quanto mais visível, menor o offset (desenha mais “trecho” da linha)
-              const offset = Math.max(0, (1 - ratio) * L);
-              p.style.strokeDashoffset = offset;
-              // leve “fade” junto com o scroll (efeito gradiente)
-              p.style.opacity = 0.25 + 0.65 * ratio; // 0.25 → 0.9
-            } catch (e) { }
-          });
-        });
-      }, { threshold: thresholds, rootMargin: "0px 0px -15% 0px" });
-
-      svgs.forEach(svg => io.observe(svg));
-
-      // re-calcula em resize (caso o layout mude)
-      window.addEventListener('resize', () => {
+      // animação baseada em scroll (somente no mobile)
+      function setupMobile() {
         svgs.forEach(initSvg);
-      }, { passive: true });
+
+        const update = () => {
+          rafId = null;
+          const vh = window.innerHeight || document.documentElement.clientHeight;
+          const start = vh * 0.12;  // começa a desenhar quando encosta ~12% do topo
+          const end   = vh * 0.88;  // termina perto de 88%
+
+          svgs.forEach(svg => {
+            const rect = svg.getBoundingClientRect();
+            let ratio = (end - rect.top) / (end - start);
+            ratio = Math.max(0, Math.min(1, ratio)); // clamp 0..1
+
+            svg.querySelectorAll('path').forEach(p => {
+              try {
+                const L = p.__len || p.getTotalLength();
+                p.style.strokeDashoffset = (1 - ratio) * L;
+                p.style.opacity = 0.25 + 0.65 * ratio; // 0.25 → 0.9
+              } catch (e) {}
+            });
+          });
+        };
+
+        const onScroll = () => {
+          if (rafId == null) rafId = requestAnimationFrame(update);
+        };
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', () => {
+          svgs.forEach(initSvg);
+          onScroll();
+        }, { passive: true });
+
+        // inicial
+        onScroll();
+
+        teardown = () => {
+          window.removeEventListener('scroll', onScroll);
+          window.removeEventListener('resize', onScroll);
+          if (rafId != null) cancelAnimationFrame(rafId);
+          rafId = null;
+        };
+      }
+
+      // animação por IntersectionObserver (desktop, mantém original)
+      function setupDesktop() {
+        svgs.forEach(initSvg);
+
+        // observa quanto do SVG está visível (0..1) e mapeia para o dash
+        const thresholds = Array.from({ length: 21 }, (_, i) => i / 20); // 0, .05, ..., 1
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            const ratio = entry.intersectionRatio; // 0..1
+            const svg = entry.target;
+            svg.querySelectorAll('path').forEach(p => {
+              try {
+                const L = p.__len || p.getTotalLength();
+                // quanto mais visível, menor o offset (desenha mais “trecho” da linha)
+                const offset = Math.max(0, (1 - ratio) * L);
+                p.style.strokeDashoffset = offset;
+                // leve “fade” junto com o scroll (efeito gradiente)
+                p.style.opacity = 0.25 + 0.65 * ratio; // 0.25 → 0.9
+              } catch (e) { }
+            });
+          });
+        }, { threshold: thresholds, rootMargin: "0px 0px -15% 0px" });
+
+        svgs.forEach(svg => io.observe(svg));
+
+        // re-calcula em resize (caso o layout mude)
+        const onResize = () => { svgs.forEach(initSvg); };
+        window.addEventListener('resize', onResize, { passive: true });
+
+        teardown = () => {
+          io.disconnect();
+          window.removeEventListener('resize', onResize);
+        };
+      }
+
+      function setup() {
+        teardown(); // limpa qualquer setup anterior
+        if (mq.matches) setupMobile();
+        else setupDesktop();
+      }
+
+      setup();
+      // reconfigura ao mudar entre mobile/desktop
+      if (mq.addEventListener) mq.addEventListener('change', setup);
+      else mq.addListener(setup);
     })();
   </script>
 </body>
