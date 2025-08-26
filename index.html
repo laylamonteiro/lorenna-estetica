@@ -3,7 +3,8 @@
 
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
   <title>Lorenna Estética | Beleza & bem-estar</title>
   <meta name="description"
     content="Reduza medidas, melhore a firmeza da pele e conquiste a silhueta que valoriza sua beleza natural. Tratamentos corporais e faciais com método personalizado em São José dos Campos." />
@@ -840,6 +841,7 @@
     }
 
     @media (max-width: 980px) {
+
       #servicos .grid,
       #clinica .grid,
       #contato .grid {
@@ -851,7 +853,8 @@
       width: 100%;
       height: 110px;
       border-radius: 12px;
-      margin-bottom: 12px;
+      margin-bottom: 0px;
+      margin-top: 0px;
       display: block;
     }
 
@@ -893,16 +896,16 @@
       /* some no mobile */
     }
 
-    @media (min-width: 981px){
-      .container{
+    @media (min-width: 981px) {
+      .container {
         max-width: var(--max) !important;
         padding-left: 20px !important;
         padding-right: 20px !important;
       }
     }
 
-    @media (min-width: 981px){
-      #contato .grid{
+    @media (min-width: 981px) {
+      #contato .grid {
         display: grid;
         grid-template-columns: 1.1fr .9fr !important;
         align-items: start;
@@ -910,27 +913,56 @@
     }
 
     /* CONTATO – desktop: cards com a mesma altura e mapa 100% do card */
-    @media (min-width: 981px){
-      #contato .grid{
+    @media (min-width: 981px) {
+      #contato .grid {
         grid-template-columns: 1.1fr .9fr !important;
-        align-items: stretch !important;   /* em vez de start */
+        align-items: stretch !important;
       }
-      #contato .grid > .card{
+
+      #contato .grid>.card {
         height: 100%;
         display: flex;
         flex-direction: column;
       }
-      #contato .map-container{
-        flex: 1 1 auto;      /* preenche o card */
+
+      #contato .map-container {
+        flex: 1 1 auto;
         height: 100%;
         min-height: 0;
       }
-      #contato .map-container iframe{
+
+      #contato .map-container iframe {
         height: 100%;
         min-height: 0;
       }
     }
 
+    /* ondas dos SVGs de serviços: animação suave do traço */
+    #servicos .service-art path {
+      transition: stroke-dashoffset .45s ease, opacity .35s ease;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #servicos .service-art path {
+        transition: none;
+      }
+    }
+
+    #servicos .card h3 {
+      margin-top: 0;
+    }
+
+    #servicos .service-art {
+      width: 100%;
+    }
+
+    #servicos .section-sub {
+      margin-bottom: 0px !important;
+    }
+
+    #servicos .grid {
+      margin-top: 0 !important;
+    }
   </style>
 
   <!-- SEO LocalBusiness -->
@@ -1109,31 +1141,24 @@
   <!-- SERVIÇOS -->
   <section id="servicos" class="container reveal">
     <h2 class="section-title">Nossos serviços</h2>
-    <p class="section-sub">Tratamentos corporais e faciais personalizados para suas necessidades.</p>
+    <p class="section-sub">Tratamentos corporais e faciais personalizados para suas necessidades</p>
 
     <div class="grid">
       <!-- Procedimentos corporais -->
       <article class="card">
         <!-- arte abstrata: ondas + brilho, versão A (esquerda→direita) -->
-        <svg class="service-art" viewBox="0 0 1200 220" xmlns="http://www.w3.org/2000/svg" role="img"
-          aria-label="Arte abstrata procedimentos corporais">
+        <svg class="service-art" viewBox="0 0 1200 220" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"
+          role="img" aria-label="Arte abstrata procedimentos corporais">
           <defs>
-            <linearGradient id="bgA" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stop-color="#fff0f6" />
-              <stop offset="100%" stop-color="#fde8f2" />
-            </linearGradient>
             <linearGradient id="strokeA" x1="0" y1="0" x2="1" y2="0">
               <stop offset="0%" stop-color="#e16aa2" />
               <stop offset="100%" stop-color="#f59ac3" />
             </linearGradient>
           </defs>
-          <rect width="1200" height="220" rx="14" fill="url(#bgA)" />
           <path d="M0,160 C200,140 420,80 600,90 C780,100 980,150 1200,130" fill="none" stroke="url(#strokeA)"
             stroke-width="5" stroke-linecap="round" opacity=".65" />
           <path d="M0,190 C260,170 420,130 600,138 C780,146 960,174 1200,168" fill="none" stroke="url(#strokeA)"
             stroke-width="3" stroke-linecap="round" opacity=".45" />
-          <circle cx="180" cy="70" r="4" fill="#e16aa2" opacity=".85" />
-          <circle cx="1020" cy="90" r="3" fill="#f59ac3" opacity=".85" />
         </svg>
 
         <h3>Procedimentos corporais</h3>
@@ -1152,25 +1177,18 @@
       <!-- Procedimentos faciais -->
       <article class="card">
         <!-- arte abstrata: ondas + brilho, versão B (direita→esquerda, combinando com a de cima) -->
-        <svg class="service-art" viewBox="0 0 1200 220" xmlns="http://www.w3.org/2000/svg" role="img"
-          aria-label="Arte abstrata procedimentos faciais">
+        <svg class="service-art" viewBox="0 0 1200 220" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"
+          role="img" aria-label="Arte abstrata procedimentos faciais">
           <defs>
-            <linearGradient id="bgB" x1="1" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#fde8f2" />
-              <stop offset="100%" stop-color="#fff0f6" />
-            </linearGradient>
             <linearGradient id="strokeB" x1="1" y1="0" x2="0" y2="0">
               <stop offset="0%" stop-color="#f59ac3" />
               <stop offset="100%" stop-color="#e16aa2" />
             </linearGradient>
           </defs>
-          <rect width="1200" height="220" rx="14" fill="url(#bgB)" />
           <path d="M1200,160 C980,140 760,80 600,90 C440,100 220,150 0,130" fill="none" stroke="url(#strokeB)"
             stroke-width="5" stroke-linecap="round" opacity=".65" />
           <path d="M1200,190 C940,170 780,130 600,138 C420,146 240,174 0,168" fill="none" stroke="url(#strokeB)"
             stroke-width="3" stroke-linecap="round" opacity=".45" />
-          <circle cx="1020" cy="70" r="4" fill="#f59ac3" opacity=".85" />
-          <circle cx="180" cy="90" r="3" fill="#e16aa2" opacity=".85" />
         </svg>
 
         <h3>Procedimentos faciais</h3>
@@ -1545,6 +1563,53 @@
       });
     }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
     sections.forEach(s => obs.observe(s));
+  </script>
+
+  <script>
+    (function () {
+      const svgs = document.querySelectorAll('#servicos .service-art');
+
+      // calcula e aplica dash nos paths de cada SVG
+      function initSvg(svg) {
+        svg.querySelectorAll('path').forEach(p => {
+          try {
+            const L = p.getTotalLength();
+            p.style.strokeDasharray = L;
+            p.style.strokeDashoffset = L; // começa "invisível"
+            // opacidade inicial mais baixa
+            p.style.opacity = 0.25;
+          } catch (e) { /* ignora se não for um path geométrico */ }
+        });
+      }
+
+      svgs.forEach(initSvg);
+
+      // observa quanto do SVG está visível (0..1) e mapeia para o dash
+      const thresholds = Array.from({ length: 21 }, (_, i) => i / 20); // 0, .05, ..., 1
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          const ratio = entry.intersectionRatio; // 0..1
+          const svg = entry.target;
+          svg.querySelectorAll('path').forEach(p => {
+            try {
+              const L = p.getTotalLength();
+              // quanto mais visível, menor o offset (desenha mais “trecho” da linha)
+              const offset = Math.max(0, (1 - ratio) * L);
+              p.style.strokeDashoffset = offset;
+              // leve “fade” junto com o scroll (efeito gradiente)
+              p.style.opacity = 0.25 + 0.65 * ratio; // 0.25 → 0.9
+            } catch (e) { }
+          });
+        });
+      }, { threshold: thresholds, rootMargin: "0px 0px -15% 0px" });
+
+      svgs.forEach(svg => io.observe(svg));
+
+      // re-calcula em resize (caso o layout mude)
+      window.addEventListener('resize', () => {
+        svgs.forEach(initSvg);
+      }, { passive: true });
+    })();
   </script>
 </body>
 
