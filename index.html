@@ -8,7 +8,7 @@
   <title>Lorenna Estética | Beleza & bem-estar</title>
   <meta name="description"
     content="Reduza medidas, melhore a firmeza da pele e conquiste a silhueta que valoriza sua beleza natural. Tratamentos corporais e faciais com método personalizado em São José dos Campos." />
-  <meta name="theme-color" content="#f7d4e8" />
+  <meta name="theme-color" content="#8C3E37" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -34,15 +34,23 @@
 
   <style>
     :root {
-      --rosa: #f59ac3;
-      --rosa-escuro: #e16aa2;
-      --rosa-claro: #fde8f2;
+      --rosa: #8C3E37;
+      --rosa-escuro: #6E2F2A;
+      --rosa-claro: #F1E4E7;
       --texto: #2a2a2a;
       --cinza: #6b7280;
       --branco: #fff;
       --sombra: 0 10px 30px rgba(245, 154, 195, .25);
       --radius: 18px;
       --max: 1200px;
+
+      /* Paleta complementar e neutros para harmonia e contraste */
+      --mauve: #BF6F8C;
+      --pessego: #D99379;
+      --nude: #D9B0B7;
+      --grafite: #1F2933;
+      --bg-soft: #FFFDFC;
+      --borda: #E7DADF;
     }
 
     * {
@@ -63,13 +71,7 @@
       margin: 0;
       font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif;
       color: var(--texto);
-      background: linear-gradient(180deg, var(--branco), #fff 35%, var(--rosa-claro) 100%)
-    }
-
-    img,
-    svg,
-    iframe {
-      max-width: 100%;
+      background: linear-gradient(180deg, var(--bg-soft), #fff 35%, var(--rosa-claro) 100%);
       display: block;
       border-radius: 12px;
       height: auto
@@ -151,7 +153,8 @@
     .menu {
       display: flex;
       gap: 18px;
-      align-items: center
+      align-items: center;
+      z-index: 1001
     }
 
     .menu a {
@@ -187,18 +190,21 @@
     }
 
     .cta {
-      padding: 10px 16px;
       background: var(--rosa);
-      color: #111;
-      border-radius: 999px;
-      font-weight: 800;
+      color: var(--branco) !important;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: var(--radius);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       box-shadow: var(--sombra);
-      transform: translateZ(0)
+      transition: background .25s ease, transform .1s ease;
     }
 
     .cta:hover {
       background: var(--rosa-escuro);
-      color: #fff
+      transform: translateY(-1px);
     }
 
     .cta:active {
@@ -664,7 +670,7 @@
       font-family: 'Great Vibes', cursive;
       font-size: 2rem;
       font-weight: 700;
-      color: #d63384;
+      color: var(--rosa-escuro);
       margin: 0;
       animation: fadeInDown 1s ease both
     }
@@ -864,7 +870,7 @@
       }
     }
 
-    /* ===== FIX OVERFLOW MOBILE ===== */
+    /* ===== Correção de overflow lateral no mobile ===== */
     html,
     body {
       width: 100%;
@@ -950,10 +956,6 @@
 
     #servicos .card h3 {
       margin-top: 0;
-    }
-
-    #servicos .service-art {
-      width: 100%;
     }
 
     #servicos .section-sub {
@@ -1099,12 +1101,12 @@
       }
     }
 
-    /* Largura dos itens baseada em slides-per-view */
+    /* Largura dos itens de acordo com --ba-slides-per-view */
     .ba-viewport .ba-item {
       width: calc((100% - (var(--ba-gap) * (var(--ba-slides-per-view) - 1))) / var(--ba-slides-per-view));
     }
 
-    /* Reduz o foco visível dos botões para acessibilidade */
+    /* Foco visível (a11y) */
     .ba-nav:focus-visible {
       outline: 2px solid #a73c76;
       outline-offset: 2px;
@@ -1193,7 +1195,7 @@
       cursor: not-allowed;
     }
 
-    /* toque mobile mais confortável */
+    /* Alvos maiores em telas sensíveis ao toque */
     @media (pointer: coarse) {
       .ba-lightbox__nav {
         width: 56px;
@@ -1297,6 +1299,109 @@
         gap: 8px;
       }
     }
+
+    /* CTA Section: contraste reforçado e visual profissional */
+    .cta-section {
+      background: var(--rosa-claro);
+      border: 1px solid var(--borda);
+      border-radius: var(--radius);
+    }
+
+    .cta-section h2 {
+      color: var(--grafite);
+    }
+
+    .cta-section .section-sub {
+      color: var(--texto);
+      opacity: .92;
+    }
+
+    /* Links com cor acessível */
+    a {
+      color: var(--rosa);
+    }
+
+    a:hover {
+      color: var(--rosa-escuro);
+    }
+
+
+    /* ===== Navegação mobile (menu lateral) ===== */
+    @media (max-width: 920px) {
+      .nav {
+        align-items: center;
+      }
+
+      .hamb {
+        appearance: none;
+        border: 0;
+        background: transparent;
+        font-size: 1.8rem;
+        line-height: 1;
+        padding: 6px 10px;
+        border-radius: 10px;
+        color: var(--grafite);
+      }
+
+      .hamb:focus-visible {
+        outline: 2px solid var(--rosa);
+        outline-offset: 2px;
+      }
+
+      @media (max-width: 920px) {
+        .menu {
+          position: fixed;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          height: 100vh;
+          width: min(82vw, 360px);
+          transform: translateX(100%);
+          transition: transform .28s ease;
+          background: #fff;
+          box-shadow: -12px 0 30px rgba(0, 0, 0, .15);
+          padding: 32px 24px;
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+          z-index: 1002;
+          overflow-y: auto;
+        }
+
+        .menu .cta {
+          width: 100%;
+          text-align: center;
+          padding: 14px 0;
+          font-size: 1.1rem;
+          border-radius: 12px;
+        }
+
+        .menu.is-open {
+          transform: translateX(0);
+        }
+
+        .menu a {
+          font-size: 1.1rem;
+          font-weight: 500;
+          padding: 10px 0;
+        }
+
+        .drawer-backdrop {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100vw;
+          height: 100vh;
+          background: rgba(0, 0, 0, .35);
+          z-index: 1000;
+        }
+      }
+
+      @media (min-width: 921px) {
+        .drawer-backdrop {
+          display: none !important;
+        }
+      }
   </style>
 
   <!-- SEO LocalBusiness -->
@@ -1368,15 +1473,19 @@
         <p class="logo-subtitle">Beleza & bem estar</p>
       </a>
 
+      <!-- Backdrop do menu mobile (aparece apenas quando o menu está aberto) -->
+      <div class="drawer-backdrop" hidden></div>
+
+
       <button class="hamb" aria-expanded="false" aria-controls="menu" aria-label="Abrir menu">☰</button>
-      <nav id="menu" class="menu" aria-label="principal">
+      <nav id="menu" class="menu">
         <a href="#metodo">Metodologia</a>
         <a href="#servicos">Serviços</a>
         <a href="#depoimentos">Depoimentos</a>
         <a href="#sobre">Sobre</a>
-        <a href="#contato">Localização</a>
-        <a class="cta" href="https://wa.me/5512997956374?text=Ol%C3%A1!%20Quero%20agendar%20uma%20avalia%C3%A7%C3%A3o"
-          target="_blank" rel="noopener" aria-label="Agendar avaliação pelo WhatsApp">Agendar</a>
+        <a href="#contato">Contato</a>
+        <a class="cta" href="https://wa.me/5512997956374?text=Olá!%20Quero%20agendar%20uma%20avaliação" target="_blank"
+          rel="noopener">Agendar avaliação</a>
       </nav>
     </div>
   </header>
@@ -2158,6 +2267,48 @@
           if (e.key === 'ArrowRight') goNextLb();
         }
       });
+    })();
+  </script>
+
+
+  <script>
+    // ===== Menu lateral (mobile) =====
+    (function () {
+      const $hamb = document.querySelector('.hamb');
+      const $menu = document.getElementById('menu');
+      let $backdrop = document.querySelector('.drawer-backdrop');
+      if (!$hamb || !$menu) return;
+      function openDrawer(open) {
+        if (open) {
+          $menu.classList.add('is-open');
+          $hamb.setAttribute('aria-expanded', 'true');
+          if ($backdrop) { $backdrop.hidden = false; }
+          document.body.style.overflow = 'hidden';
+        } else {
+          $menu.classList.remove('is-open');
+          $hamb.setAttribute('aria-expanded', 'false');
+          if ($backdrop) { $backdrop.hidden = true; }
+          document.body.style.overflow = '';
+        }
+      }
+      $hamb.addEventListener('click', () => {
+        const isOpen = $menu.classList.contains('is-open');
+        openDrawer(!isOpen);
+      });
+      $menu.addEventListener('click', (e) => {
+        const t = e.target;
+        if (t && t.tagName === 'A') openDrawer(false);
+      });
+      if ($backdrop) {
+        $backdrop.addEventListener('click', () => openDrawer(false));
+      }
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && $menu.classList.contains('is-open')) openDrawer(false);
+      });
+      const mql = window.matchMedia('(min-width: 921px)');
+      function handleMQ() { if (mql.matches) openDrawer(false); }
+      if (mql.addEventListener) mql.addEventListener('change', handleMQ);
+      else mql.addListener(handleMQ);
     })();
   </script>
 
